@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 
 import { db, auth } from "@/lib/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import styles from "@/styles/CurrentDreams.module.css";
 
 interface DreamTeam {
@@ -17,26 +17,42 @@ interface DreamTeam {
   category: string;
 }
 
+interface User {
+  username: string
+}
+
 export default function CurrentDreams() {
   const [dreams, setDreams] = useState<DreamTeam[]>([]);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState<string>("");
   const router = useRouter();
+  const params = useParams();
+  const uid = params?.uid as string;
 
   useEffect(() => {
     const fetchDreams = async () => {
       const user = auth.currentUser;
-      if (!user) return;
-
+      if (!user) {
+        console.log("No user found.");
+        setLoading(false);
+        return;
+      }
+  
+      console.log("Fetching dreams for user:", user.uid);
+  
       try {
         const q = query(collection(db, "teams"), where("uid", "==", user.uid));
-
         const querySnapshot = await getDocs(q);
-
+        
+        console.log("Query snapshot size:", querySnapshot.size);
+  
         const dreamsList: DreamTeam[] = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...(doc.data() as Omit<DreamTeam, "id">),
         }));
-
+  
+        console.log("Fetched dreams:", dreamsList);
+  
         setDreams(dreamsList);
       } catch (err) {
         console.error("Error fetching dreams:", err);
@@ -44,13 +60,13 @@ export default function CurrentDreams() {
         setLoading(false);
       }
     };
-
+  
     fetchDreams();
   }, []);
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Your Dream Teams</h1>
+      <h1 className={styles.title}>{username}'s Dream Teams</h1>
 
       {loading ? (
         <p>Loading...</p>

@@ -6,7 +6,10 @@ import styles from "@/styles/SearchUsers.module.css";
 import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "@/lib/firebaseConfig"; // Import the database and auth
 import { arrayUnion } from "firebase/firestore";
-import { useRouter } from "next/navigation"; // For navigation
+import { useRouter } from "next/router"; // For navigation
+
+
+
 
 export default function SearchUsers() {
   const [username, setUsername] = useState("");
@@ -59,7 +62,7 @@ export default function SearchUsers() {
       console.error(err);
     }
   };
-
+  
   const handleViewFriends = () => {
     setShowFriends(true);
   };
@@ -103,9 +106,9 @@ export default function SearchUsers() {
   
 
   const handleViewDreams = (friendUsername: string) => {
-    // Redirect to the CurrentDreams page with the friend's username as a URL parameter
-    router.push(`/currentDreams?username=${friendUsername}`);
+    router.push(`/userTeams/${friendUsername}`);
   };
+  
 
   return (
     <div className={styles.container}>

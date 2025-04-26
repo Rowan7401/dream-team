@@ -32,6 +32,7 @@ export default function CreateNewDream() {
     "Popular Culture",
     "Movies",
     "Food",
+    "TV Shows",
     "Other"
   ];
 

@@ -85,6 +85,7 @@ export default function SearchDreams() {
         <button onClick={() => fetchDreamsByCategory("popular culture")}>Popular Culture</button>
         <button onClick={() => fetchDreamsByCategory("movies")}>Movies</button>
         <button onClick={() => fetchDreamsByCategory("food")}>Food</button>
+        <button onClick={() => fetchDreamsByCategory("tv shows")}>TV Shows</button>
         <button onClick={() => fetchDreamsByCategory("other")}>Other</button>
       </div>
 
