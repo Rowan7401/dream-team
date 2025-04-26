@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/lib/firebaseConfig";
+import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+
+import BackButton from "@/components/backButton";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "@/styles/Signup.module.css";
-import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+
 
 
 export default function SignUp() {
@@ -105,6 +109,7 @@ export default function SignUp() {
           </a>
         </p>
       </main>
+      <BackButton/>
     </div>
   );
 }

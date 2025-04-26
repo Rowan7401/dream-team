@@ -6,6 +6,9 @@ import styles from "@/styles/SearchUsers.module.css";
 import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "@/lib/firebaseConfig"; // Import the database and auth
 import { arrayUnion } from "firebase/firestore";
+
+import Navbar from "@/components/navbar";
+import BackButton from "@/components/backButton";
 import { useRouter } from "next/router"; // For navigation
 
 
@@ -111,80 +114,84 @@ export default function SearchUsers() {
   
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Search Users</h1>
+    <>
+    <Navbar/>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Search Users</h1>
 
-      {/* Search Input */}
-      <div className={styles.searchBar}>
-        <input
-          type="text"
-          placeholder="Enter username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className={styles.input}
-        />
-        <button onClick={handleSearch} className={styles.searchButton}>
-          Search
-        </button>
-      </div>
-
-      {/* Error Message */}
-      {error && <p className={styles.error}>{error}</p>}
-
-      {/* Toggle between Search Results and Friends */}
-      <div className={styles.buttonContainer}>
-        <button onClick={handleViewFriends} className={styles.viewFriendsButton}>
-          View Friends
-        </button>
-      </div>
-
-      {/* Display Friends if toggled */}
-      {showFriends && (
-        <div className={styles.results}>
-          <h2>Your Friends</h2>
-          {friends.length > 0 ? (
-            friends.map((friend, index) => (
-              <div key={index} className={styles.resultCard}>
-                <p><strong>Username:</strong> {friend.username}</p>
-                <p><strong>Email:</strong> {friend.email}</p>
-                <button
-                  onClick={() => handleViewDreams(friend.username)} // Use friend's username here
-                  className={styles.viewDreamTeamsButton}
-                >
-                  View Dream Teams
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>You have no friends yet.</p>
-          )}
+        {/* Search Input */}
+        <div className={styles.searchBar}>
+          <input
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className={styles.input}
+          />
+          <button onClick={handleSearch} className={styles.searchButton}>
+            Search
+          </button>
         </div>
-      )}
 
-      {/* Display Search Results if not showing friends */}
-      {!showFriends && (
-        <div className={styles.results}>
-          <h2>Search Results</h2>
-          {results.length > 0 ? (
-            results.map((user, index) => (
-              <div key={index} className={styles.resultCard}>
-                <p><strong>Username:</strong> {user.username}</p>
-                <button onClick={() => handleAddFriend(user)} className={styles.addFriendButton}>
-                  Add Friend
-                </button>
-                <button
-                  onClick={() => handleViewDreams(user.username)} // Use username for dream teams
-                  className={styles.viewDreamTeamsButton}
-                >
-                  View Dream Teams
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>No users found.</p>
-          )}
+        {/* Error Message */}
+        {error && <p className={styles.error}>{error}</p>}
+
+        {/* Toggle between Search Results and Friends */}
+        <div className={styles.buttonContainer}>
+          <button onClick={handleViewFriends} className={styles.viewFriendsButton}>
+            View Friends
+          </button>
         </div>
-      )}
-    </div>
+
+        {/* Display Friends if toggled */}
+        {showFriends && (
+          <div className={styles.results}>
+            <h2>Your Friends</h2>
+            {friends.length > 0 ? (
+              friends.map((friend, index) => (
+                <div key={index} className={styles.resultCard}>
+                  <p><strong>Username:</strong> {friend.username}</p>
+                  <p><strong>Email:</strong> {friend.email}</p>
+                  <button
+                    onClick={() => handleViewDreams(friend.username)} // Use friend's username here
+                    className={styles.viewDreamTeamsButton}
+                  >
+                    View Dream Teams
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>You have no friends yet.</p>
+            )}
+          </div>
+        )}
+
+        {/* Display Search Results if not showing friends */}
+        {!showFriends && (
+          <div className={styles.results}>
+            <h2>Search Results</h2>
+            {results.length > 0 ? (
+              results.map((user, index) => (
+                <div key={index} className={styles.resultCard}>
+                  <p><strong>Username:</strong> {user.username}</p>
+                  <button onClick={() => handleAddFriend(user)} className={styles.addFriendButton}>
+                    Add Friend
+                  </button>
+                  <button
+                    onClick={() => handleViewDreams(user.username)} // Use username for dream teams
+                    className={styles.viewDreamTeamsButton}
+                  >
+                    View Dream Teams
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No users found.</p>
+            )}
+          </div>
+        )}
+      </div>
+      <BackButton />
+    </>
   );
 }

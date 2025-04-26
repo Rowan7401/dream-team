@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Navbar from "@/components/navbar";
+import BackButton from "@/components/backButton";
+
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
@@ -51,19 +54,22 @@ export default function UserTeamsPage() {
   if (teams.length === 0) return <p>{username} has no dream teams yet.</p>;
 
   return (
-    <div>
-      <h1>Dream Teams by {username}</h1>
-      {teams.map((team) => (
-        <div key={team.id} style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}>
-          <p>Category: {team.category}</p>
-          <h2>{team.title}</h2>
-          <ul>
-            <li>{team.pick1}</li>
-            <li>{team.pick2}</li>
-            <li>{team.pick3}</li>
-          </ul>
-        </div>
-      ))}
-    </div>
+    <><Navbar />
+      <div>
+        <h1>Dream Teams by {username}</h1>
+        {teams.map((team) => (
+          <div key={team.id} style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}>
+            <p>Category: {team.category}</p>
+            <h2>{team.title}</h2>
+            <ul>
+              <li>{team.pick1}</li>
+              <li>{team.pick2}</li>
+              <li>{team.pick3}</li>
+            </ul>
+          </div>
+        ))}
+      </div>
+      <BackButton/>
+    </>
   );
 }

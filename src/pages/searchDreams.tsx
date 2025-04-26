@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import styles from "@/styles/SearchDreams.module.css";
+import Navbar from "@/components/navbar";
+import BackButton from "@/components/backButton";
+
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
@@ -22,7 +25,6 @@ export default function SearchDreams() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<DreamTeam[]>([]);
   const [loading, setLoading] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
 
@@ -88,70 +90,73 @@ export default function SearchDreams() {
   ];
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Search Dream Teams</h1>
+    <><Navbar />
+      <div className={styles.container}>
+        <h1 className={styles.title}>Search Dream Teams</h1>
 
-      <div className={styles.searchBar}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for a dream team..."
-          className={styles.input}
-        />
-        <button
-          onClick={() => fetchDreamsByQuery(searchQuery)}
-          className={styles.searchButton}
-        >
-          Search
-        </button>
-      </div>
-
-      <div className={styles.categoryButtons}>
-        {categories.map((cat) => (
+        <div className={styles.searchBar}>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search for a dream team..."
+            className={styles.input}
+          />
           <button
-          key={cat}
-          onClick={() => {
-            setSelectedCategory(cat);
-            fetchDreamsByCategory(cat);
-          }}
-          className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
-        >
+            onClick={() => fetchDreamsByQuery(searchQuery)}
+            className={styles.searchButton}
+          >
+            Search
+          </button>
+        </div>
 
-          {cat
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")}
-        </button>
-        
-        ))}
+        <div className={styles.categoryButtons}>
+          {categories.map((cat) => (
+            <button
+            key={cat}
+            onClick={() => {
+              setSelectedCategory(cat);
+              fetchDreamsByCategory(cat);
+            }}
+            className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
+          >
+
+            {cat
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")}
+          </button>
+          
+          ))}
+        </div>
+
+
+        <div className={styles.results}>
+          {loading ? (
+            <p>Loading...</p>
+          ) : results.length === 0 ? (
+            <p>No dream teams found.</p>
+          ) : (
+            results.map((dream) => (
+              <div key={dream.id} className={styles.card}>
+                <h2>{dream.title}</h2>
+                <p><strong>Pick 1:</strong> {dream.pick1}</p>
+                <p><strong>Pick 2:</strong> {dream.pick2}</p>
+                <p><strong>Pick 3:</strong> {dream.pick3}</p>
+                <p><em>Category:</em> {dream.category}</p>
+                <p><strong>Created By:</strong> {dream.createdByUsername}</p>
+
+                {/* 🔥 Show cosigners if there are any */}
+                {dream.cosignedBy && dream.cosignedBy.length > 0 && (
+                  <p><em>***Co-signed by:</em>{dream.cosignedBy.join(", ")}</p>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+
       </div>
-
-
-      <div className={styles.results}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : results.length === 0 ? (
-          <p>No dream teams found.</p>
-        ) : (
-          results.map((dream) => (
-            <div key={dream.id} className={styles.card}>
-              <h2>{dream.title}</h2>
-              <p><strong>Pick 1:</strong> {dream.pick1}</p>
-              <p><strong>Pick 2:</strong> {dream.pick2}</p>
-              <p><strong>Pick 3:</strong> {dream.pick3}</p>
-              <p><em>Category:</em> {dream.category}</p>
-              <p><strong>Created By:</strong> {dream.createdByUsername}</p>
-
-              {/* 🔥 Show cosigners if there are any */}
-              {dream.cosignedBy && dream.cosignedBy.length > 0 && (
-                <p><em>***Co-signed by:</em>{dream.cosignedBy.join(", ")}</p>
-              )}
-            </div>
-          ))
-        )}
-      </div>
-
-    </div>
+      <BackButton/>
+    </>
   );
 }

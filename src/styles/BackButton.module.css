@@ -1,0 +1,15 @@
+.backButton {
+    opacity: 75%;
+    border-radius: 15%;
+    border-width: 0.6rem;
+    color: #0070f3;
+    font-size: 1rem;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .backButton:hover {
+    color: #ffffff;
+  }
+  

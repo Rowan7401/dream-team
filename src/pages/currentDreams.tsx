@@ -6,6 +6,8 @@ import { db, auth } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 
 import { useParams, useRouter } from "next/navigation";
+import Navbar from "@/components/navbar";
+import BackButton from "@/components/backButton";
 import styles from "@/styles/CurrentDreams.module.css";
 
 interface DreamTeam {
@@ -78,30 +80,33 @@ export default function CurrentDreams() {
   
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>{username}'s Dream Teams</h1>
+    <><Navbar />
+      <div className={styles.container}>
+        <h1 className={styles.title}>{username}'s Dream Teams</h1>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : dreams.length === 0 ? (
-        <p>No dream teams found. Create one from the home page!</p>
-      ) : (
-        <div className={styles.grid}>
-          {dreams.map((dream) => (
-            <div key={dream.id} className={styles.card}>
-              <h2>{dream.title}</h2>
-              <p><strong>Pick 1:</strong> {dream.pick1}</p>
-              <p><strong>Pick 2:</strong> {dream.pick2}</p>
-              <p><strong>Pick 3:</strong> {dream.pick3}</p>
-              <p><em>Category:</em> {dream.category}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        {loading ? (
+          <p>Loading...</p>
+        ) : dreams.length === 0 ? (
+          <p>No dream teams found. Create one from the home page!</p>
+        ) : (
+          <div className={styles.grid}>
+            {dreams.map((dream) => (
+              <div key={dream.id} className={styles.card}>
+                <h2>{dream.title}</h2>
+                <p><strong>Pick 1:</strong> {dream.pick1}</p>
+                <p><strong>Pick 2:</strong> {dream.pick2}</p>
+                <p><strong>Pick 3:</strong> {dream.pick3}</p>
+                <p><em>Category:</em> {dream.category}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
-      <button onClick={() => router.push("/dreamTeamLanding")} className={styles.button}>
-        Back to Home
-      </button>
-    </div>
+        <button onClick={() => router.push("/dreamTeamLanding")} className={styles.button}>
+          Back to Home
+        </button>
+      </div>
+      <BackButton/>
+    </>
   );
 }
