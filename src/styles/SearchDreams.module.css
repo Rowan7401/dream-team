@@ -96,3 +96,35 @@
 .card strong {
   color: #007bff;
 }
+
+.cosignSection {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+  background-color: #f0f0f0;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.categoryButton {
+  padding: 8px 16px;
+  margin: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #000000;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.categoryButton:hover {
+  background-color: #f0f0f0;
+}
+
+.activeButton {
+  background-color: #0070f3;
+  opacity: 57%;
+  color: rgb(26, 156, 34);
+  border: 1px solid #007bff;
+}
+

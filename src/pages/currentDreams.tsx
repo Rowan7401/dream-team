@@ -41,9 +41,21 @@ export default function CurrentDreams() {
       console.log("Fetching dreams for user:", user.uid);
   
       try {
+        // 🔥 First, get the user's username
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+  
+        if (userDoc.exists()) {
+          const userData = userDoc.data() as User;
+          setUsername(userData.username); // 🛠 Set the username here
+        } else {
+          console.log("No user document found.");
+        }
+  
+        // 🔥 Then, get the user's dreams
         const q = query(collection(db, "teams"), where("uid", "==", user.uid));
         const querySnapshot = await getDocs(q);
-        
+  
         console.log("Query snapshot size:", querySnapshot.size);
   
         const dreamsList: DreamTeam[] = querySnapshot.docs.map((doc) => ({
@@ -63,6 +75,7 @@ export default function CurrentDreams() {
   
     fetchDreams();
   }, []);
+  
 
   return (
     <div className={styles.container}>

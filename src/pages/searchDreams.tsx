@@ -11,14 +11,20 @@ interface DreamTeam {
   pick1: string;
   pick2: string;
   pick3: string;
-  createdByUsername: string;
   category: string;
+  categoryLower: string;
+  createdByUsername: string;
+  cosignedBy?: string[]; // optional array of usernames
 }
+
 
 export default function SearchDreams() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<DreamTeam[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+
 
   const fetchDreamsByQuery = async (queryStr: string) => {
     setLoading(true);
@@ -42,22 +48,44 @@ export default function SearchDreams() {
 
   const fetchDreamsByCategory = async (category: string) => {
     setLoading(true);
+  
     try {
-      const q = query(
-        collection(db, "teams"),
-        where("categoryLower", "==", category.toLowerCase())
-      );
-      const querySnapshot = await getDocs(q);
-      const categoryDreams = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<DreamTeam, "id">),
+      const teamsRef = collection(db, "teams");
+      const querySnapshot = await getDocs(teamsRef);
+  
+      let dreams = querySnapshot.docs.map((doc) => ({
+        ...(doc.data() as DreamTeam),
+        id: doc.id
       }));
-      setResults(categoryDreams);
-    } catch (err) {
-      console.error("Error fetching dreams by category:", err);
+  
+      if (category.toLowerCase() === "most popular") {
+        dreams = dreams
+          .filter((dream) => dream.cosignedBy && dream.cosignedBy.length > 0)
+          .sort((a, b) => (b.cosignedBy?.length || 0) - (a.cosignedBy?.length || 0));
+      } else {
+        dreams = dreams.filter(
+          (dream) => dream.categoryLower?.toLowerCase() === category.toLowerCase()
+        );
+      }
+  
+      setResults(dreams);
+    } catch (error) {
+      console.error("Error fetching dreams:", error);
     }
+  
     setLoading(false);
   };
+  
+  const categories = [
+    "most popular",
+    "sports",
+    "popular culture",
+    "movies",
+    "food",
+    "tv shows",
+    "music",
+    "other"
+  ];
 
   return (
     <div className={styles.container}>
@@ -80,14 +108,25 @@ export default function SearchDreams() {
       </div>
 
       <div className={styles.categoryButtons}>
-        <button onClick={() => fetchDreamsByCategory("most popular")}>Most Popular</button>
-        <button onClick={() => fetchDreamsByCategory("sports")}>Sports</button>
-        <button onClick={() => fetchDreamsByCategory("popular culture")}>Popular Culture</button>
-        <button onClick={() => fetchDreamsByCategory("movies")}>Movies</button>
-        <button onClick={() => fetchDreamsByCategory("food")}>Food</button>
-        <button onClick={() => fetchDreamsByCategory("tv shows")}>TV Shows</button>
-        <button onClick={() => fetchDreamsByCategory("other")}>Other</button>
+        {categories.map((cat) => (
+          <button
+          key={cat}
+          onClick={() => {
+            setSelectedCategory(cat);
+            fetchDreamsByCategory(cat);
+          }}
+          className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
+        >
+
+          {cat
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}
+        </button>
+        
+        ))}
       </div>
+
 
       <div className={styles.results}>
         {loading ? (
@@ -103,10 +142,16 @@ export default function SearchDreams() {
               <p><strong>Pick 3:</strong> {dream.pick3}</p>
               <p><em>Category:</em> {dream.category}</p>
               <p><strong>Created By:</strong> {dream.createdByUsername}</p>
+
+              {/* 🔥 Show cosigners if there are any */}
+              {dream.cosignedBy && dream.cosignedBy.length > 0 && (
+                <p><em>***Co-signed by:</em>{dream.cosignedBy.join(", ")}</p>
+              )}
             </div>
           ))
         )}
       </div>
+
     </div>
   );
 }

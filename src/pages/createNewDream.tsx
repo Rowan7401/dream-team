@@ -3,17 +3,18 @@
 import { useState, useEffect } from "react";
 
 import { db, auth } from "@/lib/firebaseConfig";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, updateDoc, addDoc, getDoc, getDocs, doc } from "firebase/firestore";
 
 import { useRouter } from "next/navigation";
 import styles from "@/styles/CreateNewDream.module.css";
 
-function normalizePick(pick: string): string {
+function normalizeInput(pick: string): string {
     return pick
         .trim()
         .toLowerCase()
         .replace(/[^\w\s]/gi, "") // remove punctuation
-        .replace(/\s+/g, " ");    // collapse multiple spaces
+        .replace(/\s+/g, " ")    // collapse multiple spaces
+        .replace(/\b\w/g, (char) => char.toUpperCase()); 
 }
   
 export default function CreateNewDream() {
@@ -33,70 +34,99 @@ export default function CreateNewDream() {
     "Movies",
     "Food",
     "TV Shows",
+    "Music",
     "Other"
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
+  
     const user = auth.currentUser;
     if (!user) {
       setError("You must be logged in to create a dream team.");
       return;
     }
-
-    const finalCategory =
-      category === "Other" && customCategory.trim()
-        ? customCategory.trim()
-        : category;
-
-    const newPicks = [
-        normalizePick(pick1),
-        normalizePick(pick2),
-        normalizePick(pick3)
-        ].sort();
-          
-
+  
     try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+  
+      let createdByUsername = "Anonymous";
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        createdByUsername = userData.username || "Anonymous";
+      }
+  
+      const finalCategory =
+        category === "Other" && customCategory.trim()
+          ? customCategory.trim()
+          : category;
+  
+      const newPicks = [
+        normalizeInput(pick1),
+        normalizeInput(pick2),
+        normalizeInput(pick3)
+      ].sort();
+  
       const teamsRef = collection(db, "teams");
       const snapshot = await getDocs(teamsRef);
-
-      const isDuplicate = snapshot.docs.some((doc) => {
-        const data = doc.data();
+  
+      let existingTeamDoc = null;
+  
+      for (const docSnap of snapshot.docs) {
+        const data = docSnap.data();
         const existingPicks = [
-            normalizePick(data.pick1 || ""),
-            normalizePick(data.pick2 || ""),
-            normalizePick(data.pick3 || "")
-          ].sort();
-          
-
-        return JSON.stringify(existingPicks) === JSON.stringify(newPicks);
-      });
-
-      if (isDuplicate) {
-        setError("A dream team with these exact picks already exists.");
+          normalizeInput(data.pick1 || ""),
+          normalizeInput(data.pick2 || ""),
+          normalizeInput(data.pick3 || "")
+        ].sort();
+  
+        if (JSON.stringify(existingPicks) === JSON.stringify(newPicks)) {
+          existingTeamDoc = docSnap;
+          break;
+        }
+      }
+  
+      if (existingTeamDoc) {
+        // 🚀 Team already exists — co-sign instead of creating new
+        const existingData = existingTeamDoc.data();
+        const teamRef = doc(db, "teams", existingTeamDoc.id);
+  
+        const currentCosignedBy: string[] = existingData.cosignedBy || [];
+  
+        // Only add if not already cosigned
+        if (!currentCosignedBy.includes(createdByUsername)) {
+          await updateDoc(teamRef, {
+            cosignedBy: [...currentCosignedBy, createdByUsername]
+          });
+        }
+  
+        router.push("/currentDreams");
         return;
       }
-
+  
+      // 🚀 No duplicate found — create new dream team
       await addDoc(teamsRef, {
-        title: title.trim(),
-        pick1: pick1.trim(),
-        pick2: pick2.trim(),
-        pick3: pick3.trim(),
+        title: normalizeInput(title),
+        pick1: normalizeInput(pick1),
+        pick2: normalizeInput(pick2),
+        pick3: normalizeInput(pick3),
         category: finalCategory,
-        categoryLower: category.toLowerCase(),
+        categoryLower: finalCategory.toLowerCase(),
         uid: user.uid,
-        createdByUsername: user.displayName || user.email || "Anonymous",
+        createdByUsername,
+        cosignedBy: [], // 🔥 new field, starts empty
         createdAt: new Date()
       });
-
+  
       router.push("/currentDreams");
     } catch (err) {
       console.error("Error creating dream team:", err);
       setError("An error occurred while creating the dream team.");
     }
   };
+  
 
   return (
     <div className={styles.container}>
