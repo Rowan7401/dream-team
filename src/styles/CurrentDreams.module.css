@@ -14,8 +14,8 @@
   .card {
     background: linear-gradient(135deg, rgb(67, 9, 149), rgb(172, 172, 172));
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.7rem;
+    box-shadow: 0 0.05rem 0.08rem rgba(0, 0, 0, 0.1);
     text-align: left;
     transition: transform 0.2s ease;
   }
@@ -28,6 +28,8 @@
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
+    font-weight: 450;
+    color: rgb(204, 204, 204);
   }
   
   .card p {
@@ -69,6 +71,18 @@
     text-shadow: 0 0 0.1rem rgba(121, 64, 244, 0.8), 
                  0 0 0.1rem rgba(103, 102, 103, 0.884);
                  
+  }
+
+  .heroSubtitle {
+    font-size: 1.3rem;
+    border: groove;
+    background-color: rgb(175, 174, 174);
+    border-width: 0.4rem;
+    font-weight: 400;
+    color: #000000;
+    animation: fadeIn 1.5s ease-in-out;
+    margin-bottom: 3rem;
+    
   }
   
   .nav {

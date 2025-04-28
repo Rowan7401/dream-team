@@ -127,11 +127,3 @@
     background-color: #d13b2b;
   }
   
-  body {
-    background: linear-gradient(135deg, #4325c9, #928dab); /* or any cool gradient */
-    min-height: 100vh;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    color: white;
-  }
-  

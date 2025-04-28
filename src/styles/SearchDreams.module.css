@@ -5,15 +5,6 @@
   text-align: center;
 }
 
-body {
-  background: linear-gradient(135deg, #424242, #000000); 
-  backdrop-filter: blur(80rem); /* frosted glass blur */
--webkit-backdrop-filter: blur(80rem); /* safari support */
-  min-height: 100vh;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-}
-
 .searchBar {
   margin-bottom: 20px;
 }
@@ -176,7 +167,6 @@ body {
   margin-bottom: 3rem;
   
 }
-
 
 .nav {
   background: linear-gradient(135deg, #3406bc, #545454); ;

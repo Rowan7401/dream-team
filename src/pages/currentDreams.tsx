@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CurrentDreams.module.css";
+import '../styles/global.css';
 
 interface DreamTeam {
   id: string;
@@ -98,10 +99,10 @@ export default function CurrentDreams() {
             {dreams.map((dream) => (
               <div key={dream.id} className={styles.card}>
                 <h2>{dream.title}</h2>
-                <p><strong>Pick 1:</strong> {dream.pick1}</p>
-                <p><strong>Pick 2:</strong> {dream.pick2}</p>
-                <p><strong>Pick 3:</strong> {dream.pick3}</p>
-                <p><em>Category:</em> {dream.category}</p>
+                <p className={styles.heroSubtitle}><strong>Pick 1:</strong> {dream.pick1}</p>
+                <p className={styles.heroSubtitle}><strong>Pick 2:</strong> {dream.pick2}</p>
+                <p className={styles.heroSubtitle}><strong>Pick 3:</strong> {dream.pick3}</p>
+                <p className={styles.heroSubtitle}><em>Category:</em> {dream.category}</p>
               </div>
             ))}
           </div>

@@ -1,0 +1,7 @@
+/* styles/global.css */
+body {
+    background: linear-gradient(135deg, #424242, #000000);
+    backdrop-filter: blur(80rem); /* frosted glass blur */
+    min-height: 100vh;
+  }
+  
