@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/SearchUsers.module.css";
-import '@/styles/global.css';
 
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/DreamTeamLanding.module.css";
-import '@/styles/global.css';
+
 
 export default function DreamTeamLanding() {
   const router = useRouter();
