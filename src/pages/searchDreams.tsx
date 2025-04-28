@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "@/styles/SearchDreams.module.css";
-import '../styles/global.css';
+import '@/styles/global.css';
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "@/styles/SearchUsers.module.css";
-import '../styles/global.css';
+import '@/styles/global.css';
 
 import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "@/lib/firebaseConfig"; // Import the database and auth

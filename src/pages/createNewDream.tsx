@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CreateNewDream.module.css";
-import '../styles/global.css';
+import '@/styles/global.css';
 
 function normalizeInput(pick: string): string {
     return pick

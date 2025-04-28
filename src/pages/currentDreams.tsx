@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CurrentDreams.module.css";
-import '../styles/global.css';
+import '@/styles/global.css';
 
 interface DreamTeam {
   id: string;

@@ -9,7 +9,7 @@ import { doc, setDoc, collection, query, where, getDocs } from "firebase/firesto
 import BackButton from "@/components/backButton";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "@/styles/Signup.module.css";
-import '../styles/global.css';
+import '@/styles/global.css';
 
 
 
