@@ -52,64 +52,64 @@ export default function SignUp() {
   };
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Sign Up</h1>
-        <p>Create your account to get started</p>
-      </header>
+    <>
+      <div className={styles.container}>
+        <header className={styles.heroHeader}>
+            <h1 className={styles.heroTitle}>Create Account</h1>
+            <p>Sign Up To Get Started</p>
+        </header>
 
-      <main className={styles.main}>
-        <h2 className={styles.formTitle}>Create Account</h2>
+        <main className={styles.main}>
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <form onSubmit={handleSignUp} className="space-y-4">
+            <div>
+              <label className={styles.inputLabel}>Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className={styles.inputField}
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div>
+              <label className={styles.inputLabel}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.inputField}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div>
+              <label className={styles.inputLabel}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.inputField}
+                placeholder="password123"
+                required
+              />
+            </div>
+            <button type="submit" className={styles.button}>
+              Sign Up
+            </button>
+          </form>
 
-        <form onSubmit={handleSignUp} className="space-y-4">
-          <div>
-            <label className={styles.inputLabel}>Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className={styles.inputField}
-              placeholder="Username"
-              required
-            />
-          </div>
-          <div>
-            <label className={styles.inputLabel}>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={styles.inputField}
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div>
-            <label className={styles.inputLabel}>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.inputField}
-              placeholder="password123"
-              required
-            />
-          </div>
-          <button type="submit" className={styles.button}>
-            Sign Up
-          </button>
-        </form>
-
-        <p className={styles.textCenter}>
-          Already have an account?{" "}
-          <a href="/" className={styles.textLink}>
-            Log in
-          </a>
-        </p>
-      </main>
-      <BackButton/>
-    </div>
+          <p className={styles.textCenter}>
+            Already have an account?{" "}
+            <a href="/" className={styles.textLink}>
+              Log in
+            </a>
+          </p>
+        </main>
+        <BackButton/>
+      </div>
+    </>
   );
 }

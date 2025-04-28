@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
+import styles from "@/styles/SearchUsers.module.css";
 
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -54,9 +55,16 @@ export default function UserTeamsPage() {
   if (teams.length === 0) return <p>{username} has no dream teams yet.</p>;
 
   return (
-    <><Navbar />
-      <div>
-        <h1>Dream Teams by {username}</h1>
+    <>
+      <div className={styles.nav}>
+          <Navbar />
+      </div>  
+
+      <div className={styles.container}>
+        <header className={styles.heroHeader}>
+            <h1 className={styles.heroTitle} style={{ fontSize: "3rem" }}>Dream Teams by {username}</h1>
+        </header>
+   
         {teams.map((team) => (
           <div key={team.id} style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}>
             <p>Category: {team.category}</p>

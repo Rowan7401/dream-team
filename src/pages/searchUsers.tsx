@@ -115,9 +115,13 @@ export default function SearchUsers() {
 
   return (
     <>
-    <Navbar/>
+      <div className={styles.nav}>
+            <Navbar />
+      </div>    
       <div className={styles.container}>
-        <h1 className={styles.title}>Search Users</h1>
+        <header className={styles.heroHeader}>
+          <h1 className={styles.heroTitle}>Search Users</h1>
+        </header>
 
         {/* Search Input */}
         <div className={styles.searchBar}>

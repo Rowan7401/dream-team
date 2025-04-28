@@ -8,13 +8,6 @@
     margin: 0 auto;
   }
   
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
   .searchBar {
     display: flex;
     justify-content: center;
@@ -74,7 +67,7 @@
   }
   
   .resultCard {
-    background-color: #f9f9f9;
+    background-color: #4b4b4bda;
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 6px;
@@ -115,5 +108,29 @@
   
   .viewDreamTeamsButton:hover {
     background-color: #0056b3;
+  }
+
+  .heroHeader {
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 0.1rem;
+  }
+  
+  .heroTitle {
+    font-size: 3.7rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #097aaf 0%, #20f6e4 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: fadeIn 1s ease-in-out;
+    text-shadow: 0 0 0.1rem rgba(27, 142, 204, 0.8), 
+                 0 0 0.1rem rgba(55, 255, 235, 0.884);
+                 
+  }
+  
+  .nav {
+    background: linear-gradient(135deg, #3406bc, #545454); ;
   }
   

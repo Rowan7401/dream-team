@@ -80,9 +80,14 @@ export default function CurrentDreams() {
   
 
   return (
-    <><Navbar />
-      <div className={styles.container}>
-        <h1 className={styles.title}>{username}'s Dream Teams</h1>
+    <>
+      <div className={styles.nav}>
+            <Navbar />
+      </div>    
+        <div className={styles.container}>
+        <header className={styles.heroHeader}>
+          <h1 className={styles.heroTitle}>{username}'s Dream Teams</h1>
+        </header>
 
         {loading ? (
           <p>Loading...</p>
@@ -101,12 +106,9 @@ export default function CurrentDreams() {
             ))}
           </div>
         )}
-
-        <button onClick={() => router.push("/dreamTeamLanding")} className={styles.button}>
-          Back to Home
-        </button>
+        <BackButton/>
       </div>
-      <BackButton/>
+      
     </>
   );
 }

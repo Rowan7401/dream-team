@@ -1,34 +1,25 @@
 .navbar {
-  background: linear-gradient(90deg, #6100f3, #0051a3);
-  padding: 12px 24px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  border-radius: 0 0 12px 12px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(8rem); /* frosted glass blur */
+  -webkit-backdrop-filter: blur(8rem); /* safari support */
+  padding: 0.8rem 0.1rem;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  box-shadow: 0 0.4rem 3rem rgba(0, 0, 0, 0.1);
+  border: 0.05rem solid rgba(255, 255, 255, 0.3);
 }
 
-.navLinks {
-  display: flex;
-  gap: 20px;
-}
-
-.navLink {
-  color: rgb(255, 255, 255);
+.navbar a {
+  color: white;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  margin-left: 0.5rem;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-.navLink:hover {
-  color: #ffcc00;
-}
-
-.active {
-  border-bottom: 2px solid #ffcc00;
-  padding-bottom: 2px;
+.navbar a:hover {
+  color: #ffd700; /* gold highlight on hover */
 }

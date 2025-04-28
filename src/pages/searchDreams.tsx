@@ -50,16 +50,16 @@ export default function SearchDreams() {
 
   const fetchDreamsByCategory = async (category: string) => {
     setLoading(true);
-  
+
     try {
       const teamsRef = collection(db, "teams");
       const querySnapshot = await getDocs(teamsRef);
-  
+
       let dreams = querySnapshot.docs.map((doc) => ({
         ...(doc.data() as DreamTeam),
         id: doc.id
       }));
-  
+
       if (category.toLowerCase() === "most popular") {
         dreams = dreams
           .filter((dream) => dream.cosignedBy && dream.cosignedBy.length > 0)
@@ -69,15 +69,15 @@ export default function SearchDreams() {
           (dream) => dream.categoryLower?.toLowerCase() === category.toLowerCase()
         );
       }
-  
+
       setResults(dreams);
     } catch (error) {
       console.error("Error fetching dreams:", error);
     }
-  
+
     setLoading(false);
   };
-  
+
   const categories = [
     "most popular",
     "sports",
@@ -90,10 +90,16 @@ export default function SearchDreams() {
   ];
 
   return (
-    <><Navbar />
-      <div className={styles.container}>
-        <h1 className={styles.title}>Search Dream Teams</h1>
+    <>
+      <div className={styles.nav}>
+        <Navbar />
+      </div>
 
+      <div className={styles.container}>
+        <header className={styles.heroHeader}>
+          <h1 className={styles.heroTitle}>Search Dream Teams</h1>
+        </header>
+        
         <div className={styles.searchBar}>
           <input
             type="text"
@@ -113,20 +119,20 @@ export default function SearchDreams() {
         <div className={styles.categoryButtons}>
           {categories.map((cat) => (
             <button
-            key={cat}
-            onClick={() => {
-              setSelectedCategory(cat);
-              fetchDreamsByCategory(cat);
-            }}
-            className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
-          >
+              key={cat}
+              onClick={() => {
+                setSelectedCategory(cat);
+                fetchDreamsByCategory(cat);
+              }}
+              className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
+            >
 
-            {cat
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ")}
-          </button>
-          
+              {cat
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
+            </button>
+
           ))}
         </div>
 
@@ -137,26 +143,27 @@ export default function SearchDreams() {
           ) : results.length === 0 ? (
             <p>No dream teams found.</p>
           ) : (
-            results.map((dream) => (
-              <div key={dream.id} className={styles.card}>
-                <h2>{dream.title}</h2>
-                <p><strong>Pick 1:</strong> {dream.pick1}</p>
-                <p><strong>Pick 2:</strong> {dream.pick2}</p>
-                <p><strong>Pick 3:</strong> {dream.pick3}</p>
-                <p><em>Category:</em> {dream.category}</p>
-                <p><strong>Created By:</strong> {dream.createdByUsername}</p>
+            <div className={styles.grid}>
+              {results.map((dream) => (
+                <div key={dream.id} className={styles.card}>
+                  <h2 className={styles.heroSubtitle}>{dream.title}</h2>
+                  <p><strong>Pick 1:</strong> {dream.pick1}</p>
+                  <p><strong>Pick 2:</strong> {dream.pick2}</p>
+                  <p><strong>Pick 3:</strong> {dream.pick3}</p>
+                  <p><em>Category:</em> {dream.category}</p>
+                  <p><strong>Created By:</strong> {dream.createdByUsername}</p>
 
-                {/* 🔥 Show cosigners if there are any */}
-                {dream.cosignedBy && dream.cosignedBy.length > 0 && (
-                  <p><em>***Co-signed by:</em>{dream.cosignedBy.join(", ")}</p>
-                )}
-              </div>
-            ))
+                  {dream.cosignedBy && dream.cosignedBy.length > 0 && (
+                    <p><em>***Co-signed by:</em> {dream.cosignedBy.join(", ")}</p>
+                  )}
+                </div>
+              ))}
+            </div>
           )}
         </div>
 
+        <BackButton />
       </div>
-      <BackButton/>
     </>
   );
 }

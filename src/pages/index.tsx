@@ -1,27 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider, db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
-
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 import styles from "@/styles/Home.module.css";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [clientRendered, setClientRendered] = useState(false);
-  const router = useRouter(); // Initialize router for navigation
-
-  useEffect(() => {
-    setClientRendered(true);
-  }, []);
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,27 +21,23 @@ export default function Home() {
 
     try {
       let userEmail = email;
-    
-      // If the input doesn't contain an '@', assume it's a username
       if (!email.includes("@")) {
         const usersRef = collection(db, "users");
         const q = query(usersRef, where("username", "==", email));
         const querySnapshot = await getDocs(q);
-    
+
         if (querySnapshot.empty) {
           setError("Username not found");
           return;
         }
-    
-        // Extract the email from the matched document
+
         const userDoc = querySnapshot.docs[0];
         userEmail = userDoc.data().email;
       }
-    
+
       await signInWithEmailAndPassword(auth, userEmail, password);
       console.log("Logged in!");
       router.push("/dreamTeamLanding");
-    
     } catch (err: any) {
       setError(err.message);
     }
@@ -59,15 +47,11 @@ export default function Home() {
     try {
       await signInWithPopup(auth, provider);
       console.log("Logged in with Google!");
-      router.push("/dreamTeamLanding"); // Redirect to dreamTeamLanding after successful login
+      router.push("/dreamTeamLanding");
     } catch (err: any) {
       setError(err.message);
     }
   };
-
-  if (!clientRendered) {
-    return null;
-  }
 
   return (
     <div className={styles.container}>

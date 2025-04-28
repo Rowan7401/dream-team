@@ -1,15 +1,18 @@
 .backButton {
-    opacity: 75%;
-    border-radius: 15%;
-    border-width: 0.6rem;
-    color: #0070f3;
-    font-size: 1rem;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  
-  .backButton:hover {
-    color: #ffffff;
-  }
-  
+  position: relative;
+  top: 7rem; 
+  right: 30rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.backButton:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}

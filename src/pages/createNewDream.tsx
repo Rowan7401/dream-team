@@ -131,73 +131,80 @@ export default function CreateNewDream() {
   
 
   return (
-    <><Navbar />
-      <div className={styles.container}>
-        <h1 className={styles.title}>Create a New Dream Team</h1>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Pick 1"
-            value={pick1}
-            onChange={(e) => setPick1(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Pick 2"
-            value={pick2}
-            onChange={(e) => setPick2(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Pick 3"
-            value={pick3}
-            onChange={(e) => setPick3(e.target.value)}
-            className={styles.input}
-            required
-          />
+    <>
+      <div className={styles.nav}>
+          <Navbar />
+      </div>  
 
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className={styles.select}
-          >
-            {predefinedCategories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+        <div className={styles.container}>
+          <header className={styles.heroHeader}>
+              <h1 className={styles.heroTitle}>Create New Dream Team</h1>
+          </header>
 
-          {category === "Other" && (
+          <form onSubmit={handleSubmit} className={styles.form}>
             <input
               type="text"
-              placeholder="Enter custom category"
-              value={customCategory}
-              onChange={(e) => setCustomCategory(e.target.value)}
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className={styles.input}
+              required
             />
-          )}
+            <input
+              type="text"
+              placeholder="Pick 1"
+              value={pick1}
+              onChange={(e) => setPick1(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Pick 2"
+              value={pick2}
+              onChange={(e) => setPick2(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Pick 3"
+              value={pick3}
+              onChange={(e) => setPick3(e.target.value)}
+              className={styles.input}
+              required
+            />
 
-          {error && <p className={styles.error}>{error}</p>}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className={styles.select}
+            >
+              {predefinedCategories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
 
-          <button type="submit" className={styles.button}>
-            Create Dream Team
-          </button>
-        </form>
-      </div>
-      <BackButton/>
-    </>
+            {category === "Other" && (
+              <input
+                type="text"
+                placeholder="Enter custom category"
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+                className={styles.input}
+              />
+            )}
+
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button type="submit" className={styles.button}>
+              Create Team
+            </button>
+          </form>
+          <BackButton/>
+        </div>
+      </>
   );
 }

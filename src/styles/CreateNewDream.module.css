@@ -1,18 +1,58 @@
 /* CreateNewDream.module.css */
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0.3rem;
+}
+
+.nav {
+  background: linear-gradient(135deg, #3406bc, #545454); ;
+}
+
+body {
+  background: linear-gradient(135deg, #424242, #000000); 
+  backdrop-filter: blur(80rem); /* frosted glass blur */
+-webkit-backdrop-filter: blur(80rem); /* safari support */
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
   
-  .header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
+ 
+.heroHeader {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 0.1rem;
+}
+
+.heroTitle {
+  font-size: 3.7rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #09af11 0%, #f6f620 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fadeIn 1s ease-in-out;
+  text-shadow: 0 0 0.1rem rgba(51, 204, 27, 0.8), 
+               0 0 0.1rem rgba(255, 235, 55, 0.884);
+               
+}
   .title {
     font-size: 2rem;
     font-weight: bold;

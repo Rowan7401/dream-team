@@ -6,14 +6,18 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f5f5f5;
     padding: 20px;
   }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
+
+  body {
+    background: linear-gradient(135deg, #424242, #000000); 
+    backdrop-filter: blur(80rem); /* frosted glass blur */
+  -webkit-backdrop-filter: blur(80rem); /* safari support */
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
   }
+
   
   .formTitle {
     font-size: 2rem;
@@ -22,7 +26,7 @@
   }
   
   .inputLabel {
-    font-size: 1rem;
+    font-size: 1.7rem;
     margin-bottom: 5px;
   }
   
@@ -33,7 +37,7 @@
     opacity: 60%;
     padding: 0.5rem;
     border-radius: 0.5rem;
-    border: 1px solid #ccc;
+    border: 0.05rem solid #ccc;
     margin-bottom: 1rem;
     outline: none;
   }
@@ -63,4 +67,27 @@
     text-decoration: underline;
     cursor: pointer;
   }
+
+  .heroHeader {
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 0.1rem;
+  }
   
+  .heroTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #000000 0%, #515151 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: fadeIn 1s ease-in-out;
+    text-shadow: 0 0 0.1rem rgba(121, 64, 244, 0.8), 
+                 0 0 0.1rem rgba(103, 102, 103, 0.884);
+                 
+  }
+  
+  .nav {
+    background: linear-gradient(135deg, #3406bc, #545454); ;
+  }
