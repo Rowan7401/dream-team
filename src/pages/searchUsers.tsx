@@ -151,7 +151,7 @@ export default function SearchUsers() {
         {/* Display Friends if toggled */}
         {showFriends && (
           <div className={styles.results}>
-            <h2>Your Friends</h2>
+            <h2 className={styles.h2}>Your Friends</h2>
             {friends.length > 0 ? (
               friends.map((friend, index) => (
                 <div key={index} className={styles.resultCard}>
@@ -174,7 +174,7 @@ export default function SearchUsers() {
         {/* Display Search Results if not showing friends */}
         {!showFriends && (
           <div className={styles.results}>
-            <h2>Search Results</h2>
+            <h2 className={styles.h2}>Search Results</h2>
             {results.length > 0 ? (
               results.map((user, index) => (
                 <div key={index} className={styles.resultCard}>
@@ -191,12 +191,13 @@ export default function SearchUsers() {
                 </div>
               ))
             ) : (
-              <p>No users found.</p>
+              <p className={styles.h3}>No users found.</p>
             )}
           </div>
         )}
+        <BackButton />
       </div>
-      <BackButton />
+      
     </>
   );
 }

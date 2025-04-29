@@ -148,14 +148,14 @@ export default function SearchDreams() {
               {results.map((dream) => (
                 <div key={dream.id} className={styles.card}>
                   <h2 className={styles.heroSubtitle}>{dream.title}</h2>
-                  <p><strong>Pick 1:</strong> {dream.pick1}</p>
-                  <p><strong>Pick 2:</strong> {dream.pick2}</p>
-                  <p><strong>Pick 3:</strong> {dream.pick3}</p>
-                  <p><em>Category:</em> {dream.category}</p>
+                  <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick1}</p>
+                  <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick2}</p>
+                  <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick3}</p>
+                  <p><em style={{border: "groove", borderWidth: "0.25rem",  backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
                   <p><strong>Created By:</strong> {dream.createdByUsername}</p>
 
                   {dream.cosignedBy && dream.cosignedBy.length > 0 && (
-                    <p><em>***Co-signed by:</em> {dream.cosignedBy.join(", ")}</p>
+                    <p><em style={{color: "#66acf7"}}>***Co-signed by:</em> {dream.cosignedBy.join(", ")}</p>
                   )}
                 </div>
               ))}

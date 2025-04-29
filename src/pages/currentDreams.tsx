@@ -99,10 +99,10 @@ export default function CurrentDreams() {
             {dreams.map((dream) => (
               <div key={dream.id} className={styles.card}>
                 <h2>{dream.title}</h2>
-                <p className={styles.heroSubtitle}><strong>Pick 1:</strong> {dream.pick1}</p>
-                <p className={styles.heroSubtitle}><strong>Pick 2:</strong> {dream.pick2}</p>
-                <p className={styles.heroSubtitle}><strong>Pick 3:</strong> {dream.pick3}</p>
-                <p className={styles.heroSubtitle}><em>Category:</em> {dream.category}</p>
+                <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick1}</p>
+                <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick2}</p>
+                <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {dream.pick3}</p>
+                <p className={styles.heroSubtitle}><em style={{border: "groove", borderWidth: "0.25rem",  backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
               </div>
             ))}
           </div>

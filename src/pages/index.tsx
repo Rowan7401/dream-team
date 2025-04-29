@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider, db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -9,12 +9,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 
+import { FiEye, FiEyeOff } from "react-icons/fi"; // 👈 these are simple clean icons
+
+import MoonWithStars from "./moonWithStars";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,11 +58,20 @@ export default function Home() {
     }
   };
 
+  
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1>Dream Team</h1>
+
+      <div className={styles.moonContainer}>
+            <MoonWithStars />
+            <h1 className={styles.heroTitle}>Dream Team</h1>
+      </div> 
+          
+
         <p>Assemble your perfect team</p>
+        
         <Image
           src="/dream-team-logo.jpg"
           alt="Team Illustration"
@@ -85,25 +98,35 @@ export default function Home() {
               required
             />
           </div>
-          <div>
+          <div style={{ position: "relative" }}>
             <label className={styles.inputLabel}>Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styles.inputField}
               placeholder="password123"
               required
             />
+            
+            {/* Eye Icon Button */}
+            <button 
+              className={styles.showPassword}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+            </button>
           </div>
+
           <button type="submit" className={styles.button}>
             Log In
           </button>
         </form>
 
-        <button onClick={handleGoogleLogin} className={styles.googleButton}>
+        {/* <button onClick={handleGoogleLogin} className={styles.googleButton}>
           Log in with Google
-        </button>
+        </button> */}
 
         <p className={styles.textCenter}>
           Don’t have an account?{" "}

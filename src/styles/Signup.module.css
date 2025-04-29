@@ -6,21 +6,62 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 0.5rem;
+  }
+  .moonContainer {
+    margin-right: 6rem;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .main {
+    width: 100%;
+    /* background: linear-gradient(
+      rgba(176, 97, 228, 0.3), 
+      rgba(232, 136, 244, 0.3)
+    ); */
+    background: rgba(113, 58, 130, 0.15);
+    max-width: 28rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.08rem 1.2rem rgba(0, 0, 0, 0.15); /* softer, bigger shadow */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    backdrop-filter: blur(12px); /* add slight blur over background */
+    background-clip: padding-box; /* keeps border-radius clean */
+    border: 0.1rem solid rgba(255, 255, 255, 0.2); /* light border around main */
+  }
+
+  .headerP {
+    font-size: 1rem;
+    margin-top: 0.1rem;
+    font-weight: 400;
+    color: #d1d5db;
+    animation: fadeIn 1.5s ease-in-out;
   }
 
   .formTitle {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
+    animation: fadeIn 1.5s ease-in-out;
   }
   
   .inputLabel {
-    font-size: 1.7rem;
-    margin-bottom: 5px;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fffdce;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+    animation: fadeIn 1.5s ease-in-out;
   }
   
-
   .inputField {
     width: 100%;
     color: #000000;
@@ -30,25 +71,37 @@
     border: 0.05rem solid #ccc;
     margin-bottom: 1rem;
     outline: none;
+    transition: all 0.2s ease;
+    animation: fadeIn 1.5s ease-in-out;
   }
+  
   
   
   .button {
-    background-color: #6c5ce7;
+    width: 20%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #9b6bff, #b98aff); /* subtle purple gradient */
     color: white;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    width: 100%;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    border: none;
+    transition: all 0.3s ease;
     cursor: pointer;
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 12px rgba(155, 107, 255, 0.3); /* soft glow */
   }
   
   .button:hover {
-    background-color: #5a4fcf;
+    background: linear-gradient(135deg, #8a5de0, #a77ef5); /* slightly deeper purple on hover */
+    box-shadow: 0 6px 16px rgba(155, 107, 255, 0.5); /* stronger soft glow */
+    transform: translateY(-2px); /* slight lift */
   }
   
-  .textCenter {
+  .text {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
     text-align: center;
   }
   
@@ -64,20 +117,53 @@
     padding: 0.1rem;
   }
   
+  .heroTitle2 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #e8d508 0%, #f62020 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: fadeIn 1s ease-in-out;
+    margin-bottom: 0.1rem;
+    margin-top: 0.05rem;
+                 
+  }
+
   .heroTitle {
     font-size: 3rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 0.1rem;
     background: linear-gradient(90deg, #000000 0%, #515151 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.1rem rgba(121, 64, 244, 0.8), 
-                 0 0 0.1rem rgba(103, 102, 103, 0.884);
+    text-shadow: 0 0 0.1rem rgba(161, 90, 247, 0.8), 
+                 0 0 0.1rem rgba(191, 191, 191, 0.884);
                  
+  }
+
+  .heroSubtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #ffffffd8;
+    animation: fadeIn 1.5s ease-in-out;
+    margin-bottom: 0.1rem;
+    
   }
   
   .nav {
     background: linear-gradient(135deg, #3406bc, #545454); ;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px); /* slight upward motion */
+    }
+    100% {
+      opacity: 0.5;
+      transform: translateY(0);
+    }
   }

@@ -55,20 +55,20 @@
     font-size: 5rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    background: linear-gradient(90deg, #e8d508 0%, #f6f620 100%);
+    background: linear-gradient(90deg, #8f8300 0%, #525252 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.1rem rgba(253, 34, 34, 0.8), 
-                 0 0 0.1rem rgba(255, 235, 55, 0.884);
+    text-shadow: 0 0 0.1rem rgba(249, 231, 30, 0.8), 
+                 0 0 0.1rem rgba(255, 241, 134, 0.884);
                  
   }
   
   .heroSubtitle {
     font-size: 1.3rem;
     font-weight: 400;
-    color: #d1d5db;
+    color: #ffffffec;
     animation: fadeIn 1.5s ease-in-out;
     margin-bottom: 3rem;
     

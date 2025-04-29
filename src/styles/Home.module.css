@@ -1,4 +1,12 @@
 /* src/styles/Home.module.css */
+.moonContainer {
+  margin-right: 0.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
 .container {
     display: flex;
@@ -6,9 +14,6 @@
     align-items: center;
     justify-content: center;
     padding: 0.1rem;
-    background: linear-gradient(135deg, #424242, #000000); 
-    backdrop-filter: blur(80rem); /* frosted glass blur */
-  -webkit-backdrop-filter: blur(80rem); /* safari support */
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
   }
@@ -18,7 +23,7 @@
     margin-bottom: 1.5rem;
   }
   
-  .header h1 {
+  .heroTitle {
     font-size: 3.5rem;
     font-weight: bold;
     background: linear-gradient(90deg, #e8d508 0%, #f62020 100%);
@@ -45,20 +50,27 @@
   
   .main {
     width: 100%;
+    /* background: linear-gradient(
+      rgba(176, 97, 228, 0.3), 
+      rgba(232, 136, 244, 0.3)
+    ); */
+    background: rgba(113, 58, 130, 0.15);
     max-width: 28rem;
-    background: linear-gradient(rgb(228, 97, 97), rgb(255, 255, 255));
     border-radius: 1.25rem;
-    box-shadow: 0 0.22rem 0.8rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.08rem 1.2rem rgba(0, 0, 0, 0.15); /* softer, bigger shadow */
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    backdrop-filter: blur(12px); /* add slight blur over background */
+    background-clip: padding-box; /* keeps border-radius clean */
+    border: 0.1rem solid rgba(255, 255, 255, 0.2); /* light border around main */
   }
   
   .formTitle {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #313131;
+    color: #fffdce;
     text-align: center;
   }
   
@@ -66,49 +78,82 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #323232;
+    color: #fffdce;
     margin-bottom: 0.25rem;
   }
   
   .inputField {
-    width: 100%;
-    color: #000000;
-    opacity: 60%;
-    padding: 0.5rem;
+    opacity: 90%;
+    width: 89%;
+    color: #ffffff; 
+    background: rgba(255, 255, 255, 0.1); /* very faint white */
+    border: 0.02rem solid rgba(255, 255, 255, 0.3); /* soft white border */
+    padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
-    border: 1px solid #ccc;
     margin-bottom: 1rem;
+    backdrop-filter: blur(10px); /* frosted glass effect */
     outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .inputField::placeholder {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s ease;
+  }
+
+  .inputField:focus::placeholder {
+    color:rgba(255, 227, 87, 0.85);
   }
   
   .inputField:focus {
     border-color: #9b6bff;
-    box-shadow: 0 0 0 2px rgba(155, 107, 255, 0.4);
+    box-shadow: 0 0 0 0.09rem rgba(155, 107, 255, 0.4);
+  }
+
+  .showPassword {
+    position: absolute;
+    left: 4.5rem;
+    top: 16%;
+    transform: translateY(-50%);
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    cursor: "pointer";
+    padding: 0;
+    color: "gray";
+    font-size: "1.2rem";
   }
   
   .button {
-    width: 100%;
+    width: 30%;
     padding: 0.75rem;
-    background-color: #9b6bff;
+    background: linear-gradient(135deg, #9b6bff, #b98aff); /* subtle purple gradient */
     color: white;
     font-weight: 600;
     border-radius: 0.75rem;
-    transition: background-color 0.2s;
+    border: none;
+    transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(155, 107, 255, 0.3); /* soft glow */
   }
   
   .button:hover {
-    background-color: #f01f1f;
+    background: linear-gradient(135deg, #8a5de0, #a77ef5); /* slightly deeper purple on hover */
+    box-shadow: 0 6px 16px rgba(155, 107, 255, 0.5); /* stronger soft glow */
+    transform: translateY(-2px); /* slight lift */
   }
+  
   
   .textCenter {
     text-align: center;
     font-size: 0.875rem;
-    color: #666;
+    color: #ffffff;
   }
   
   .textLink {
-    color: #9b6bff;
+    color: #f2ff00;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -126,4 +171,3 @@
   .googleButton:hover {
     background-color: #d13b2b;
   }
-  

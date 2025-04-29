@@ -7,6 +7,13 @@
     max-width: 600px;
     margin: 0 auto;
   }
+
+  .grid {
+    
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
   
   .searchBar {
     display: flex;
@@ -67,11 +74,13 @@
   }
   
   .resultCard {
-    background-color: #4b4b4bda;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 10%;
+    background: linear-gradient(270deg, #939393 5%, #bababa 30%, #d6d6d6 90%);
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 1.5rem;
+  
   }
   
   .resultCard p {
@@ -128,6 +137,13 @@
     text-shadow: 0 0 0.1rem rgba(27, 142, 204, 0.8), 
                  0 0 0.1rem rgba(55, 255, 235, 0.884);
                  
+  }
+
+  .h2 {
+    color: white;
+  }
+  .h3 {
+    color: whitesmoke;
   }
   
   .nav {

@@ -64,19 +64,24 @@ export default function UserTeamsPage() {
         <header className={styles.heroHeader}>
             <h1 className={styles.heroTitle} style={{ fontSize: "3rem" }}>Dream Teams by {username}</h1>
         </header>
-   
+
+        <div className={styles.grid}>
         {teams.map((team) => (
-          <div key={team.id} style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}>
-            <p>Category: {team.category}</p>
+          <div key={team.id} className={styles.resultCard}>
             <h2>{team.title}</h2>
-            <ul>
-              <li>{team.pick1}</li>
-              <li>{team.pick2}</li>
-              <li>{team.pick3}</li>
-            </ul>
+            <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {team.pick1}</p>
+            <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {team.pick2}</p>
+            <p><strong style={{fontSize: "1.3rem"}}>✦     </strong> {team.pick3}</p>
+            <p className={styles.heroSubtitle}><em style={{border: "groove", borderWidth: "0.25rem",  backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {team.category}</p>
           </div>
         ))}
+        </div>
+        
+   
+      
       </div>
+
+     
       <BackButton/>
     </>
   );

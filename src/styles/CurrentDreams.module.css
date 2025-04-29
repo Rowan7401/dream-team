@@ -12,30 +12,48 @@
   }
   
   .card {
-    background: linear-gradient(135deg, rgb(67, 9, 149), rgb(172, 172, 172));
-    padding: 1.5rem;
-    border-radius: 0.7rem;
-    box-shadow: 0 0.05rem 0.08rem rgba(0, 0, 0, 0.1);
+    border-radius: 10%;
+    background: linear-gradient(270deg, #939393 5%, #bababa 30%, #d6d6d6 90%);
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
     text-align: left;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 1.5rem;
+  
   }
   
   .card:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   }
   
   .card h2 {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
-    font-weight: 450;
-    color: rgb(204, 204, 204);
   }
   
   .card p {
     margin: 0.3rem 0;
     font-size: 0.95rem;
   }
+  
+  
+  .card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .card strong {
+    color: #000000;
+  } 
+  
+  .card p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #000000d1;
+  }
+  
   
   .button {
     margin-top: 2rem;
@@ -68,16 +86,13 @@
     -webkit-background-clip: text;
     color: transparent;
     animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.1rem rgba(121, 64, 244, 0.8), 
-                 0 0 0.1rem rgba(103, 102, 103, 0.884);
+    text-shadow: 0 0 0.1rem rgba(161, 90, 247, 0.8), 
+                 0 0 0.1rem rgba(191, 191, 191, 0.884);
                  
   }
 
   .heroSubtitle {
     font-size: 1.3rem;
-    border: groove;
-    background-color: rgb(175, 174, 174);
-    border-width: 0.4rem;
     font-weight: 400;
     color: #000000;
     animation: fadeIn 1.5s ease-in-out;

@@ -9,6 +9,7 @@ import { doc, setDoc, collection, query, where, getDocs } from "firebase/firesto
 import BackButton from "@/components/backButton";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "@/styles/Signup.module.css";
+import MoonWithStars from "./moonWithStars"; 
 
 
 
@@ -55,9 +56,19 @@ export default function SignUp() {
   return (
     <>
       <div className={styles.container}>
+
         <header className={styles.heroHeader}>
-            <h1 className={styles.heroTitle}>Create Account</h1>
-            <p>Sign Up To Get Started</p>
+          <div className={styles.moonContainer}>
+            <MoonWithStars />
+            <h1 className={styles.heroTitle2}>Dream Team</h1>
+          </div> 
+          
+          
+
+          <p className={styles.heroSubtitle}>Assemble your perfect team</p>
+
+          <h1 className={styles.heroTitle}>Create Account</h1>
+          <p className={styles.headerP}>Sign Up To Get Started</p>
         </header>
 
         <main className={styles.main}>
@@ -102,7 +113,7 @@ export default function SignUp() {
             </button>
           </form>
 
-          <p className={styles.textCenter}>
+          <p className={styles.text}>
             Already have an account?{" "}
             <a href="/" className={styles.textLink}>
               Log in

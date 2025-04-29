@@ -67,13 +67,24 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.card {
+/* .card {
   background: linear-gradient(135deg, rgb(67, 9, 149), rgb(172, 172, 172));
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+} */
+
+/* moon card */
+.card {
+  border-radius: 10%;
+  background: linear-gradient(270deg, #939393 5%, #bababa 30%, #d6d6d6 90%);
+  box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 1.5rem;
+
 }
 
 .card:hover {
@@ -100,13 +111,13 @@
 }
 
 .card strong {
-  color: #0099ff;
+  color: #000000;
 } 
 
 .card p {
   font-size: 1rem;
   margin: 5px 0;
-  color: #ffffff;
+  color: #000000d1;
 }
 
 
@@ -149,26 +160,27 @@
   font-size: 3.7rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #097aaf 0%, #20f6e4 100%);
+  background: linear-gradient(90deg, #0b5274 0%, #13c2b3 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   animation: fadeIn 1s ease-in-out;
-  text-shadow: 0 0 0.1rem rgba(27, 142, 204, 0.8), 
-               0 0 0.1rem rgba(55, 255, 235, 0.884);
+  text-shadow: 0 0 0.1rem rgba(140, 210, 248, 0.8), 
+               0 0 0.1rem rgba(132, 244, 233, 0.884);
                
 }
 
 .heroSubtitle {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #279de7;
+  color: #000000;
   animation: fadeIn 1.5s ease-in-out;
   margin-bottom: 3rem;
   
 }
 
 .nav {
-  background: linear-gradient(135deg, #3406bc, #545454); ;
+  background: linear-gradient(135deg, #3406bc, #545454);
+  
 }
 
