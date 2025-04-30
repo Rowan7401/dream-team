@@ -43,18 +43,26 @@
 }
 
 .categoryButtons button {
-  padding: 10px 20px;
+  padding: 0.7rem 1rem;
   font-size: 1.2rem;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #6138de;
+  color: whitesmoke;
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+  border: 0.07rem solid #ccc;
+  border-radius: 0.7rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .categoryButtons button:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: #eaeaea;
+  color: rgb(0, 0, 0);
+}
+
+.activeButton {
+  color: rgb(255, 255, 255);
+  background-color: #545454;
+  opacity: 60%;
 }
 
 .results {
@@ -128,26 +136,6 @@
   background-color: #000000;
   padding: 6px 10px;
   border-radius: 8px;
-}
-
-.categoryButton {
-  padding: 8px 16px;
-  margin: 4px;
-  border: 1px solid #ccc;
-  background-color: white;
-  color: #000000;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.3s;
-}
-
-.categoryButton:hover {
-  background-color: #f0f0f0;
-}
-
-.activeButton {
-  color: rgb(0, 89, 255);
-  border: 0.03rem solid #007bff;
 }
 
 .heroHeader {

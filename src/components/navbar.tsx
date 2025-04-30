@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebaseConfig"; // <-- assuming you have this
+import { FiUser } from "react-icons/fi";
 import styles from "@/styles/Navbar.module.css";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [openMenu, setOpenMenu] = useState(false);
 
   const navLinks = [
     { href: "/dreamTeamLanding", label: "Home" },
@@ -14,6 +20,15 @@ export default function Navbar() {
     { href: "/searchUsers", label: "Search Users" },
     { href: "/currentDreams", label: "My Dreams" },
   ];
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push("/");
+  };
+
+  const handleProfile = () => {
+    router.push("/profile");
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -29,6 +44,19 @@ export default function Navbar() {
             {link.label}
           </Link>
         ))}
+      </div>
+
+      <div className={styles.profileWrapper}>
+        <FiUser 
+          className={styles.profileIcon} 
+          onClick={() => setOpenMenu(!openMenu)} 
+        />
+        {openMenu && (
+          <div className={styles.dropdown}>
+            <button onClick={handleProfile}>Profile</button>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        )}
       </div>
     </nav>
   );
