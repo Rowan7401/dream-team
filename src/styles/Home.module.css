@@ -42,10 +42,22 @@
     color: #d1d5db;
     animation: fadeIn 1.5s ease-in-out;
   }
+
+  .loginError {
+    font-size: 1rem;
+    margin-top: 0.1rem;
+    font-weight: 400;
+    color: #fd0c0cc0;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
   
   .logo {
     margin-top: 0.4rem;
     border-radius: 3rem;
+    border-width: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.8);
+    border: 0.3rem solid rgba(0, 0, 0, 0.5);
   }
   
   .main {

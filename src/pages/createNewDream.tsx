@@ -9,17 +9,18 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CreateNewDream.module.css";
+import CategorySelect from "@/components/categorySelect";
 
 
 function normalizeInput(pick: string): string {
-    return pick
-        .trim()
-        .toLowerCase()
-        .replace(/[^\w\s]/gi, "") // remove punctuation
-        .replace(/\s+/g, " ")    // collapse multiple spaces
-        .replace(/\b\w/g, (char) => char.toUpperCase()); 
+  return pick
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, "") // remove punctuation
+    .replace(/\s+/g, " ")    // collapse multiple spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
-  
+
 export default function CreateNewDream() {
   const [title, setTitle] = useState("");
   const [pick1, setPick1] = useState("");
@@ -28,6 +29,9 @@ export default function CreateNewDream() {
   const [category, setCategory] = useState("Sports");
   const [customCategory, setCustomCategory] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+
 
   const router = useRouter();
 
@@ -44,39 +48,39 @@ export default function CreateNewDream() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-  
+
     const user = auth.currentUser;
     if (!user) {
       setError("You must be logged in to create a dream team.");
       return;
     }
-  
+
     try {
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
-  
+
       let createdByUsername = "Anonymous";
       if (userDoc.exists()) {
         const userData = userDoc.data();
         createdByUsername = userData.username || "Anonymous";
       }
-  
+
       const finalCategory =
         category === "Other" && customCategory.trim()
           ? customCategory.trim()
           : category;
-  
+
       const newPicks = [
         normalizeInput(pick1),
         normalizeInput(pick2),
         normalizeInput(pick3)
       ].sort();
-  
+
       const teamsRef = collection(db, "teams");
       const snapshot = await getDocs(teamsRef);
-  
+
       let existingTeamDoc = null;
-  
+
       for (const docSnap of snapshot.docs) {
         const data = docSnap.data();
         const existingPicks = [
@@ -84,31 +88,35 @@ export default function CreateNewDream() {
           normalizeInput(data.pick2 || ""),
           normalizeInput(data.pick3 || "")
         ].sort();
-  
+
         if (JSON.stringify(existingPicks) === JSON.stringify(newPicks)) {
           existingTeamDoc = docSnap;
           break;
         }
       }
-  
+
       if (existingTeamDoc) {
-        // 🚀 Team already exists — co-sign instead of creating new
         const existingData = existingTeamDoc.data();
         const teamRef = doc(db, "teams", existingTeamDoc.id);
-  
+
         const currentCosignedBy: string[] = existingData.cosignedBy || [];
-  
+
         // Only add if not already cosigned
         if (!currentCosignedBy.includes(createdByUsername)) {
           await updateDoc(teamRef, {
             cosignedBy: [...currentCosignedBy, createdByUsername]
           });
         }
-  
-        router.push("/currentDreams");
+
+        setSuccessMessage("✅  Co-signed existing Dream Team! 👊");
+        setShowPopup(true);
+        setTimeout(() => {
+          router.push("/currentDreams");
+        }, 3500);
         return;
       }
-  
+
+
       // 🚀 No duplicate found — create new dream team
       await addDoc(teamsRef, {
         title: normalizeInput(title),
@@ -122,25 +130,43 @@ export default function CreateNewDream() {
         cosignedBy: [], // 🔥 new field, starts empty
         createdAt: new Date()
       });
-  
-      router.push("/currentDreams");
+
+      setSuccessMessage("✅ Thank you, dream team created! 😴💭");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        router.push("/currentDreams");
+      }, 3500);
+
     } catch (err) {
       console.error("Error creating dream team:", err);
       setError("An error occurred while creating the dream team.");
     }
   };
-  
+
 
   return (
     <>
       <div className={styles.nav}>
-          <Navbar />
-      </div>  
+        <Navbar />
+      </div>
 
-        <div className={styles.container}>
-          <header className={styles.heroHeader}>
-              <h1 className={styles.heroTitle}>Create New Dream Team</h1>
-          </header>
+      <div className={styles.container}>
+        <header className={styles.heroHeader}>
+          <h1 className={styles.heroTitle}>Create New Dream Team</h1>
+        </header>
+
+        {showPopup && successMessage && (
+          <div className={`${styles.popup} ${styles.popupFadeIn}`}>
+            <p>{successMessage}</p>
+            <button className={styles.dismissButton} onClick={() => setShowPopup(false)}>
+              Dismiss
+            </button>
+          </div>
+        )}
+
+
+        <div className={styles.card}>
 
           <form onSubmit={handleSubmit} className={styles.form}>
             <input
@@ -176,17 +202,11 @@ export default function CreateNewDream() {
               required
             />
 
-            <select
+            <CategorySelect
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className={styles.select}
-            >
-              {predefinedCategories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+              onValueChange={setCategory}
+              options={predefinedCategories}
+            />
 
             {category === "Other" && (
               <input
@@ -204,8 +224,9 @@ export default function CreateNewDream() {
               Create Team
             </button>
           </form>
-          <BackButton/>
         </div>
-      </>
+        <BackButton />
+      </div>
+    </>
   );
 }

@@ -1,8 +1,19 @@
 /* styles/global.css */
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+}
+
+h1, h2, .heroTitle {
+  font-family: var(--font-cormorant);
+}
+
  body {
      background: 
       linear-gradient(rgba(0, 0, 0, 0.2), rgba(104, 104, 104, 0.2)), /* Dark overlay */
       url('/night-sky.jpg'); /* Your image */
+      font-family: var(--font-inter);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -31,7 +42,7 @@
       animation: fadeInOverlay 2.5s ease-in-out forwards;
       animation-delay: 0.5s;
     }
-    
+
     /* Keyframes */
     @keyframes fadeZoomBackground {
       to {

@@ -84,7 +84,7 @@ export default function Home() {
       <main className={styles.main}>
         <h2 className={styles.formTitle}>Log In</h2>
 
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {error && <p className={styles.loginError}>{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>

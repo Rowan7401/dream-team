@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { auth, db } from "@/lib/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
@@ -51,13 +52,25 @@ export default function ProfilePage() {
             <div className={styles.nav}>
                 <Navbar />
             </div>
+            <div className={styles.vert}>
+                <Image
+                    src="/dream-team-logo.jpg"
+                    alt="Team Illustration"
+                    width={300}
+                    height={200}
+                    className={styles.logo}
+                />
+            </div>
+
             <div className={styles.container}>
+
                 <div className={styles.card}>
                     <h1 className={styles.title}>Profile</h1>
                     <p className={styles.info}><span>Email:</span> {userData.email}</p>
                     <p className={styles.info}><span>Username:</span> {userData.username}</p>
                     <p className={styles.info}><span>User ID:</span> {userData.userId}</p>
                 </div>
+
             </div>
         </>
     );

@@ -59,14 +59,20 @@
   color: rgb(0, 0, 0);
 }
 
-.activeButton {
-  color: rgb(255, 255, 255);
-  background-color: #545454;
-  opacity: 60%;
+.categoryButtons button.activeButton {
+  background-color: rgba(103, 103, 103, 0.912);
+  color: #ffffff;
+  opacity: 70%;
 }
 
+
 .results {
-  margin-top: 30px;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #ffffffdc;
+  animation: fadeIn 1.5s ease-in-out;
+  margin-bottom: 3rem;
 }
 
 .grid {

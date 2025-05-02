@@ -31,7 +31,7 @@
   }
   
   .button {
-    background-color: #6138de;
+    background-color: #6238dec1;
     box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.65);
     color: white;
     padding: 1rem 0.5rem;
@@ -56,10 +56,10 @@
     font-size: 5rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    background: linear-gradient(90deg, #8f8300 0%, #525252 100%);
+    background: linear-gradient(90deg, #d6c402 20%, #939393 100%);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
+    color: rgba(255, 255, 255, 0.115);
     animation: fadeIn 1s ease-in-out;
     text-shadow: 0 0 0.1rem rgba(249, 231, 30, 0.8), 
                  0 0 0.1rem rgba(255, 241, 134, 0.884);
