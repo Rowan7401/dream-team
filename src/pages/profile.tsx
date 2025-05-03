@@ -68,7 +68,7 @@ export default function ProfilePage() {
                     <h1 className={styles.title}>Profile</h1>
                     <p className={styles.info}><span>Email:</span> {userData.email}</p>
                     <p className={styles.info}><span>Username:</span> {userData.username}</p>
-                    <p className={styles.info}><span>User ID:</span> {userData.userId}</p>
+                    <p className={styles.infoId}><span className={styles.h2}>User ID:</span> {userData.userId}</p>
                 </div>
 
             </div>

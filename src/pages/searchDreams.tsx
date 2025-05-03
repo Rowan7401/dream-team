@@ -40,8 +40,9 @@ export default function SearchDreams() {
       }));
 
       const filtered = allDreams.filter((dream) =>
-        dream.title.toLowerCase().includes(queryStr.toLowerCase())
+        dream.title?.toLowerCase().includes(queryStr.toLowerCase())
       );
+      
       setResults(filtered);
     } catch (err) {
       console.error("Error searching dreams:", err);

@@ -1,3 +1,36 @@
+@media screen and (max-width: 600px) {
+  .heroTitle {
+    font-size: 2rem !important;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+    text-align: center;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem !important;
+    margin-top: 0.1rem !important;
+  }
+
+  .navbar {
+    font-size: 0.59rem;
+    padding: 0.05rem !important;
+  }
+
+  .navbar a {
+    margin-left: 0.25rem !important;
+  }
+
+  .categoryButtons button {
+    padding: 0.4rem !important;
+    font-size: 1rem !important;
+  }
+
+  .input {
+    font-size: 0.9rem !important;
+  }
+  
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -6,21 +39,21 @@
 }
 
 .searchBar {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .input {
-  padding: 10px;
+  padding: 0.25rem;
   width: 60%;
-  max-width: 500px;
+  max-width: 80%;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 0.2rem;
   font-size: 1rem;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
 
 .searchButton {
-  padding: 10px 20px;
+  padding: 0.4rem;
   font-size: 1rem;
   background-color: #007bff;
   color: white;
@@ -154,13 +187,13 @@
   font-size: 3.7rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #0b5274 0%, #13c2b3 100%);
+  background: linear-gradient(90deg, #ffffff 20%, #13c2b3d7 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   animation: fadeIn 1s ease-in-out;
-  text-shadow: 0 0 0.1rem rgba(140, 210, 248, 0.8), 
-               0 0 0.1rem rgba(132, 244, 233, 0.884);
+  text-shadow: 0 0 0.3rem rgba(117, 203, 250, 0.847), 
+               0 0 0.3rem rgba(42, 247, 227, 0.808);
                
 }
 

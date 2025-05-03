@@ -1,3 +1,11 @@
+@media screen and (max-width: 600px) {
+  .backButton {
+    top: 10%;
+    justify-items: center;
+  }
+  
+}
+
 .backButton {
   position: relative;
   top: 7rem; 
@@ -5,10 +13,10 @@
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 14px;
+  border: 0.1rem solid rgba(255, 255, 255, 0.3);
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: background 0.3s;
 }

@@ -48,36 +48,35 @@ export default function Home() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      console.log("Logged in with Google!");
-      router.push("/dreamTeamLanding");
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     await signInWithPopup(auth, provider);
+  //     console.log("Logged in with Google!");
+  //     router.push("/dreamTeamLanding");
+  //   } catch (err: any) {
+  //     setError(err.message);
+  //   }
+  // };
 
-  
+
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
 
-      <div className={styles.moonContainer}>
-            <MoonWithStars />
-            <h1 className={styles.heroTitle}>Dream Team</h1>
-      </div> 
-          
+        <div className={styles.moonContainer}>
+          <MoonWithStars />
+          <h1 className={styles.heroTitle}>Dream Team</h1>
+        </div>
 
-        <p>Assemble your perfect team</p>
-        
+
+        <h2 className={styles.heroSubtitle}>Assemble your perfect team</h2>
         <Image
+          className={styles.logo}
           src="/dream-team-logo.jpg"
           alt="Team Illustration"
-          width={300}
-          height={200}
-          className={styles.logo}
+          width={320}   
+          height={250}  
         />
       </header>
 
@@ -108,9 +107,9 @@ export default function Home() {
               placeholder="password123"
               required
             />
-            
+
             {/* Eye Icon Button */}
-            <button 
+            <button
               className={styles.showPassword}
               type="button"
               onClick={() => setShowPassword(!showPassword)}

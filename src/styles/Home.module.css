@@ -1,5 +1,52 @@
 /* src/styles/Home.module.css */
+@media screen and (max-width : 600px) {
+  .heroTitle {
+    font-size: 2.5rem !important;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+    text-align: center;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem !important;
+    margin-top: 0.1rem !important;
+  }
+
+  .formTitle {
+    font-size: 1.6rem !important;
+  }
+  .logo {
+    width: 70%;
+    height: 70%;
+  }
+
+  .main {
+    width: 80% !important;
+  }
+
+  .inputField {
+    width: 98% !important;
+    font-size: 0.6rem !important;
+  }
+
+  .inputLabel {
+    font-size: 0.8rem !important;
+  }
+  
+  .showPassword {
+    left: 4rem !important;
+    top: 18% !important;
+  }
+  
+  .button {
+    width: 40% !important;
+    padding: 0.3rem !important;
+  } 
+  
+}
+
 .moonContainer {
+  margin-top: 1rem;
   margin-right: 0.5rem;
   position: relative;
   display: flex;
@@ -24,17 +71,30 @@
   }
   
   .heroTitle {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     font-weight: bold;
-    background: linear-gradient(90deg, #e8d508 0%, #f62020 100%);
+    background: linear-gradient(90deg, #ffffff 20%, #f6eb20d8 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    text-shadow: 0 0 0.3rem rgb(250, 28, 28), 
+               0 0 0.15rem rgb(255, 229, 29);
     animation: fadeIn 1s ease-in-out;
     margin-bottom: 0.1rem;
-    margin-top: 0.05rem;
+    margin-top: 0.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: #ffffffec;
+    animation: fadeIn 1.5s ease-in-out;
+    margin-bottom: 1rem;
+    margin-top: 0.3rem;
+    
   }
   
+
   .header p {
     font-size: 1rem;
     margin-top: 0.1rem;
@@ -80,7 +140,8 @@
   }
   
   .formTitle {
-    font-size: 1.5rem;
+    font-size: 2.3rem;
+    margin-top: 0.01rem;
     font-weight: 600;
     color: #fffdce;
     text-align: center;
@@ -88,7 +149,7 @@
   
   .inputLabel {
     display: block;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #fffdce;
     margin-bottom: 0.25rem;
@@ -96,13 +157,14 @@
   
   .inputField {
     opacity: 90%;
+    font-size: 0.8rem;
     width: 89%;
     color: #ffffff; 
     background: rgba(255, 255, 255, 0.1); /* very faint white */
     border: 0.02rem solid rgba(255, 255, 255, 0.3); /* soft white border */
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     backdrop-filter: blur(10px); /* frosted glass effect */
     outline: none;
     transition: all 0.2s ease;
@@ -124,8 +186,8 @@
 
   .showPassword {
     position: absolute;
-    left: 4.5rem;
-    top: 16%;
+    left: 5rem;
+    top: 20%;
     transform: translateY(-50%);
     border-radius: 1rem;
     cursor: pointer;

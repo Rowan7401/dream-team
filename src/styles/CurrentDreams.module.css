@@ -1,9 +1,32 @@
+@media screen and (max-width: 600px) {
+  .heroTitle {
+    font-size: 1.7rem !important;
+  }
+
+  .sectionHeader {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+    margin-top: 0.01rem !important;
+  }
+}
+
 .container {
-    max-width: 800px;
+    max-width: 90%;
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+    
   }
+
+  .results {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #ffffffdc;
+    animation: fadeIn 1.5s ease-in-out;
+    margin-bottom: 3rem;
+  }
+  
     
   .grid {
     display: grid;
@@ -53,6 +76,27 @@
     margin: 5px 0;
     color: #000000d1;
   }
+
+  .statusLabel {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(to right, #10b981, #06b6d4);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    display: inline-block;
+    font-size: 0.9rem;
+  }
+
+  .sectionHeader {
+    font-size: 2.7rem;
+    font-weight: 400;
+    color: #ffe601e4;
+    animation: fadeIn 1.5s ease-in-out;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    text-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.774);
+  }
   
   
   .button {
@@ -73,21 +117,23 @@
 
   .heroHeader {
     text-align: center;
+    justify-items: center;
     margin-top: 0.5rem;
     padding: 0.1rem;
   }
   
   .heroTitle {
-    font-size: 3rem;
+    font-size: 4rem;
+    width: 50rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    background: linear-gradient(90deg, #000000 0%, #515151 100%);
+    background: linear-gradient(90deg, #ffffffce 20%, #bdbdbdc9 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.1rem rgba(161, 90, 247, 0.8), 
-                 0 0 0.1rem rgba(191, 191, 191, 0.884);
+    text-shadow: 0 0 0.3rem rgba(150, 68, 250, 0.8), 
+                 0 0 0.15rem rgb(255, 255, 255);
                  
   }
 

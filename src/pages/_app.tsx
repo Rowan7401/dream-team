@@ -1,7 +1,7 @@
 // pages/_app.tsx
-import '../styles/global.css';
 import type { AppProps } from 'next/app';
 import { Inter, Cormorant_Garamond } from 'next/font/google';
+import '../styles/global.css';
 
 const inter = Inter({
   subsets: ['latin'],

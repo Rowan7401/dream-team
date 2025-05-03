@@ -11,6 +11,54 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .heroTitle {
+    font-size: 2.8rem !important;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+    text-align: center;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem !important;
+    margin-top: 0.1rem !important;
+  }
+
+  .formTitle {
+    font-size: 1.6rem !important;
+  }
+  .logo {
+    width: 70%;
+    height: 70%;
+  }
+
+  .main {
+    width: 80% !important;
+  }
+
+  .inputField {
+    width: 98% !important;
+    font-size: 0.6rem !important;
+  }
+
+  .inputLabel {
+    font-size: 0.8rem !important;
+  }
+  
+  .showPassword {
+    left: 4rem !important;
+    top: 18% !important;
+  }
+  
+  .button {
+    width: 90% !important;
+    height: 4rem !important;
+    font-size: 1.2rem !important;
+    padding: 0.3rem !important;
+  } 
+  
+
+}
 
 .container {
     display: flex;
@@ -27,6 +75,7 @@
   .main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
   }
   
@@ -56,13 +105,13 @@
     font-size: 5rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    background: linear-gradient(90deg, #d6c402 20%, #939393 100%);
+    background: linear-gradient(90deg, #ffffffd8 20%, #f8db21 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: rgba(255, 255, 255, 0.115);
     animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.1rem rgba(249, 231, 30, 0.8), 
-                 0 0 0.1rem rgba(255, 241, 134, 0.884);
+    text-shadow: 0 0 0.3rem rgb(249, 231, 30), 
+                 0 0 0.15rem rgba(245, 234, 136, 0.884);
                  
   }
   

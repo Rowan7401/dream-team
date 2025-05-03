@@ -1,5 +1,37 @@
 /* Profile.module.css */
 
+@media screen and (max-width: 600px) {
+  .logo {
+    width: 50%;
+    height: 50%;
+  }
+
+  .card {
+    width: 90% !important;
+    margin-bottom: 15rem !important;
+  }
+
+  .title {
+    font-size: 2rem !important;
+  }
+
+  .info {
+    font-size: 1rem !important;
+    max-width: 90%;
+  }
+
+  .infoId {
+    font-size: 1rem !important;
+    color: #ffffffcc;
+  }
+
+  .h2 {
+    font-size: 1.3rem !important;
+  }
+  
+}
+
+
 .container {
     display: flex;
     justify-content: center;
@@ -31,11 +63,12 @@
     width: 50%;
     backdrop-filter: blur(15px);
     border-radius: 1.5rem;
-    padding: 2rem;
-    margin-bottom: 27%;
+    padding: 0.5rem;
+    margin-bottom: 25rem;
     box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
     border: 0.1rem solid rgba(255, 255, 255, 0.25);
     text-align: center;
+    justify-items: center;
     animation: fadeIn 1.2s ease-in-out;
   }
   
@@ -47,8 +80,20 @@
     -webkit-background-clip: text;
     color: transparent;
   }
-  
+
+  .h2 {
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+    font-weight: 1000;
+    font-family: var(--font-cormorant);
+  }
+
   .info {
+    font-size: 1.2rem;
+    color: #ffffffcc;
+  }
+
+  .infoId {
     font-size: 1.2rem;
     color: #ffffffcc;
   }
