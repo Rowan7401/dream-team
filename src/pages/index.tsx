@@ -98,6 +98,16 @@ export default function Home() {
             />
           </div>
           <div style={{ position: "relative" }}>
+              {/* Eye Icon Button */}
+              <button
+              className={styles.showPassword}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+            </button>
+
+          
             <label className={styles.inputLabel}>Password</label>
             <input
               type={showPassword ? "text" : "password"}
@@ -107,15 +117,6 @@ export default function Home() {
               placeholder="password123"
               required
             />
-
-            {/* Eye Icon Button */}
-            <button
-              className={styles.showPassword}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
-            </button>
           </div>
 
           <button type="submit" className={styles.button}>

@@ -1,20 +1,32 @@
 @media screen and (max-width: 600px) {
+
+  .container {
+    max-width: 95% !important;
+  }
+
   .heroTitle {
     font-size: 1.7rem !important;
+    margin-top: -1.5rem !important;
+    margin-bottom: -1rem !important;
   }
 
   .sectionHeader {
     font-size: 1.2rem !important;
+    margin-left: 0.8rem !important;
     margin-bottom: 0.5rem !important;
-    margin-top: 0.01rem !important;
+    margin-top: 1rem !important;
+    max-width: 90% !important;
   }
 }
 
 .container {
-    max-width: 90%;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+    justify-content: center;
     
   }
 
@@ -30,7 +42,10 @@
     
   .grid {
     display: grid;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     gap: 1.5rem;
+    margin-left: -1rem;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
   
@@ -89,12 +104,19 @@
   }
 
   .sectionHeader {
-    font-size: 2.7rem;
+    font-size: 2.3rem;
     font-weight: 400;
+    max-width: 35%;
     color: #ffe601e4;
+    background: rgba(0, 0, 0, 0.598);
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
+    border-style: double;
+    border-width: 0.15rem;
     animation: fadeIn 1.5s ease-in-out;
     margin-bottom: 1rem;
     margin-top: 0.5rem;
+    margin-left: 35%;
+    padding: 0.1rem;
     text-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.774);
   }
   

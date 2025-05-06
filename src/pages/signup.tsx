@@ -9,7 +9,8 @@ import { doc, setDoc, collection, query, where, getDocs } from "firebase/firesto
 import BackButton from "@/components/backButton";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "@/styles/Signup.module.css";
-import MoonWithStars from "./moonWithStars"; 
+import MoonWithStars from "./moonWithStars";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
 
@@ -18,40 +19,49 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter(); // Initialize router for navigation
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-  
+
+    // Validate username format
+    const allowedUsernameRegex = /^[a-z0-9!&$_-]+$/;
+
+    if (!allowedUsernameRegex.test(username)) {
+      setError("Username can only contain lowercase letters, numbers, !, &, $, _, or -.");
+      return;
+    }
+
     try {
       // Step 1: Check if the username already exists
-      const q = query(collection(db, "users"), where("username", "==", username));
+      const q = query(collection(db, "users"), where("username", "==", username.toLowerCase()));
       const querySnapshot = await getDocs(q);
-  
+
       if (!querySnapshot.empty) {
         setError("Username is already taken. Please choose another.");
         return;
       }
-  
+
       // Step 2: Create the user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("User created:", user);
-  
-      // Step 3: Save the user in Firestore using their UID as the doc ID
+
+      // Step 3: Save the user in Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
         username: username,
       });
-  
+
       router.push("/dreamTeamLanding");
     } catch (err: any) {
       setError(err.message);
     }
   };
+
 
   return (
     <>
@@ -61,9 +71,9 @@ export default function SignUp() {
           <div className={styles.moonContainer}>
             <MoonWithStars />
             <h1 className={styles.heroTitle2}>Dream Team</h1>
-          </div> 
-          
-          
+          </div>
+
+
 
           <p className={styles.heroSubtitle}>Assemble your perfect team</p>
 
@@ -72,7 +82,7 @@ export default function SignUp() {
         </header>
 
         <main className={styles.main}>
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && <p className={styles.error}>*** {error} ***</p>}
 
           <form onSubmit={handleSignUp} className="space-y-4">
             <div>
@@ -80,7 +90,7 @@ export default function SignUp() {
               <input
                 type="text"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}
                 className={styles.inputField}
                 placeholder="Username"
                 required
@@ -97,10 +107,21 @@ export default function SignUp() {
                 required
               />
             </div>
-            <div>
+
+            <div style={{ position: "relative" }}>
+              {/* Eye Icon Button */}
+              <button
+                className={styles.showPassword}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+              </button>
+
+
               <label className={styles.inputLabel}>Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.inputField}
@@ -108,6 +129,7 @@ export default function SignUp() {
                 required
               />
             </div>
+
             <button type="submit" className={styles.button}>
               Sign Up
             </button>
@@ -120,7 +142,7 @@ export default function SignUp() {
             </a>
           </p>
         </main>
-        <BackButton/>
+        <BackButton />
       </div>
     </>
   );

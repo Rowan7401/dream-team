@@ -24,14 +24,37 @@
 }
 
 @media screen and (max-width: 600px) {
+
+  .container {
+    text-align: center !important;
+  }
+
   .heroTitle {
     font-size: 1.8rem !important;
     margin-bottom: 0.1rem !important;
+    margin-top: 0.1rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.4rem !important;
+    width: 17rem;
   }
 
   .card {
     width: 95% !important;
+    margin-top: 0.1rem !important;
   }
+
+  .button {
+    max-width: 90% !important;
+    width: 10rem !important;
+  }
+
+  .surpriseButton {
+    font-size: 0.9rem !important;
+    width: 14rem !important;
+  }
+
 }
 
 .popup {
@@ -51,6 +74,28 @@
   max-width: 90%;
   animation: fadeInPopup 0.4s ease-out;
 }
+
+.surpriseButton {
+  margin-top: 0.1rem;
+  background-color: #00000076;
+  color: #ffffffda;
+  padding: 0.5rem 1rem;
+  width: 40%;
+  align-self: center;
+  border-radius: 3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.surpriseButton:hover {
+  margin-top: 0.1rem;
+  background-color: #6b6b6ba8;
+  color: #ffffff;
+  transform: scale(1.01);
+  transition: transform 0.3s ease;
+}
+
 
 .dismissButton {
   margin-top: 1rem;
@@ -122,6 +167,20 @@
                0 0 0.15rem rgb(255, 255, 255);
                
 }
+
+.heroSubtitle {
+  font-size: 1.8rem;
+  margin-top: 0.1rem;
+  font-family: var(--font-cormorant);
+  align-self: center;
+  font-weight: 400;
+  color: #ba46f4ec;
+  text-shadow: 0 0 0.2rem rgba(150, 68, 250, 0.8), 
+  0 0 0.08rem rgb(255, 255, 255);
+  animation: fadeIn 1.5s ease-in-out;
+  margin-bottom: -0.5rem;
+  
+}
   .title {
     font-size: 2rem;
     font-weight: bold;
@@ -162,7 +221,7 @@
     box-shadow: 0 0 0.5rem #6923ffb0, 0 0 0.7rem #3510efa4, 0 0 0.9rem #0000004d;
     border-radius: 0.7rem;
     padding: 0.8rem;
-    font-size: 1rem;
+    font-size: 0.85rem;
     background-position: right 0.8rem center;
     background-size: 1.2rem;
   }
@@ -183,20 +242,20 @@
   
   .button {
     background-color: #0d940fc1;
+    align-self: center;
     box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.65);
-    margin-left: 15%;
     color: white;
     padding: 1rem 0.5rem;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     border-radius: 0.8rem;
-    width: 70%;
+    width: 30%;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
   .button:hover {
-    background-color: #0f5512;
-    color: goldenrod;
+    background: 50%;
+    background-color: rgba(136, 75, 249, 0.288);
   }
   
   .error {

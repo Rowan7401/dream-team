@@ -88,6 +88,7 @@ export default function SearchDreams() {
     "food",
     "tv shows",
     "music",
+    "gaming",
     "other"
   ];
 

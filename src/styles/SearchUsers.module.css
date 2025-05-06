@@ -1,22 +1,41 @@
 /* SearchUsers.module.css */
 @media screen and (max-width: 600px) {
-  .heroTitle {
-    font-size: 2.7rem !important;
-  }
-  .heroTitleMobile {
-    font-size: 2rem !important;
-  }
-
-  .sectionHeader {
-    font-size: 1.7rem !important;
-    margin-bottom: 0.5rem !important;
-    margin-top: 0.01rem !important;
+  .container {
+    max-width: 95% !important;
   }
 
   .viewFriendsButton {
-    font-size: 1rem !important;
     padding: 0.5rem !important;
-    border-radius: 0.05rem;
+    margin-top: -1rem !important;
+    font-size: 1.3rem !important;
+  }
+
+  .heroTitle {
+    font-size: 2.4rem !important;
+    margin-top: -2rem !important;
+    max-width: 30%;
+    margin-bottom: 0.2rem !important;
+    margin-left: 27rem !important;
+  }
+
+  .sectionHeader {
+    font-size: 1.2rem !important;
+    margin-left: 0.4rem !important;
+    margin-bottom: 1.5rem !important;
+    margin-top: 1rem !important;
+    max-width: 15rem !important;
+    padding: 0.2rem 0.4rem !important;
+  }
+
+  .grid {
+    max-width: 93% !important;
+    gap: 1rem !important;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)) !important;
+  }
+  
+
+  .h2 {
+    margin-top: -1rem !important;
   }
   
 }
@@ -26,14 +45,15 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    max-width: 600px;
+    max-width: 95%;
     margin: 0 auto;
   }
 
   .grid {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 75%;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   }
   
   .searchBar {
@@ -143,36 +163,29 @@
   }
 
   .sectionHeader {
-    font-size: 2.7rem;
+    font-size: 2.3rem;
     font-weight: 400;
+    max-width: 95%;
     color: #ffe601e4;
+    background: rgba(0, 0, 0, 0.598);
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
+    border-style: double;
+    border-width: 0.15rem;
     animation: fadeIn 1.5s ease-in-out;
     margin-bottom: 1rem;
     margin-top: 0.5rem;
+    margin-left: 3rem;
+    padding: 0.2rem 1.3rem;
     text-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.774);
   }
-
+  
   .heroHeader {
     text-align: center;
     margin-top: 0.5rem;
     padding: 0.1rem;
   }
-  
-  .heroTitle {
-    font-size: 3.7rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    background: linear-gradient(90deg, #ffffff 20%, #13c2b3d7 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: fadeIn 1s ease-in-out;
-    text-shadow: 0 0 0.3rem rgba(117, 203, 250, 0.847), 
-                 0 0 0.3rem rgba(42, 247, 227, 0.808);
-                 
-  }
 
-  .heroTitleMobile {
+  .heroTitle {
     font-size: 3.7rem;
     width: 50rem;
     font-weight: 800;

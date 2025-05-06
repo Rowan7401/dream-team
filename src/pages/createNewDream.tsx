@@ -23,12 +23,16 @@ function normalizeInput(pick: string): string {
 
 export default function CreateNewDream() {
   const [title, setTitle] = useState("");
+
   const [pick1, setPick1] = useState("");
   const [pick2, setPick2] = useState("");
   const [pick3, setPick3] = useState("");
+
   const [category, setCategory] = useState("Sports");
   const [customCategory, setCustomCategory] = useState("");
+
   const [error, setError] = useState("");
+
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -42,6 +46,7 @@ export default function CreateNewDream() {
     "Food",
     "TV Shows",
     "Music",
+    "Gaming",
     "Other"
   ];
 
@@ -144,6 +149,22 @@ export default function CreateNewDream() {
     }
   };
 
+  const handleRandomTopic = async () => {
+    try {
+      const res = await fetch("https://rnd.bgenc.dev/v1/word?category=nouns&count=1&separator=+");
+      const word = await res.text();
+
+      const normalizedTopic = normalizeInput(word);
+
+      setTitle(normalizedTopic);         // Update title input
+      setCustomCategory(normalizedTopic); // Update custom category
+      setCategory("Other");              // Switch to "Other" category
+    } catch (err) {
+      console.error("Failed to fetch random topic:", err);
+      setError("Couldn't fetch a random topic. Please try again.");
+    }
+  };
+
 
   return (
     <>
@@ -168,7 +189,18 @@ export default function CreateNewDream() {
 
         <div className={styles.card}>
 
-          <form onSubmit={handleSubmit} className={styles.form}>
+          <form onSubmit={handleSubmit} className={styles.form}>  
+              <p className={styles.heroSubtitle}> 🤔 Can't Think of Topic? 💭 </p>
+              <button
+                type="button"
+                onClick={handleRandomTopic}
+                className={styles.surpriseButton}
+              >
+                🎲 Surprise Me with a Topic
+              </button>
+             
+            
+
             <input
               type="text"
               placeholder="Title"
@@ -207,16 +239,6 @@ export default function CreateNewDream() {
               onValueChange={setCategory}
               options={predefinedCategories}
             />
-
-            {category === "Other" && (
-              <input
-                type="text"
-                placeholder="Enter custom category"
-                value={customCategory}
-                onChange={(e) => setCustomCategory(e.target.value)}
-                className={styles.input}
-              />
-            )}
 
             {error && <p className={styles.error}>{error}</p>}
 

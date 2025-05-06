@@ -59,6 +59,7 @@ export default function SearchUsers() {
       if (users.length === 0) {
         setError("No users found with that username.");
       } else {
+        setShowFriends(false);
         setResults(users);
       }
     } catch (err: any) {

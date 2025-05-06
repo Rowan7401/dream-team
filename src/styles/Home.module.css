@@ -35,7 +35,7 @@
   
   .showPassword {
     left: 4rem !important;
-    top: 18% !important;
+    top: 1.9rem !important;
   }
   
   .button {
@@ -185,9 +185,9 @@
   }
 
   .showPassword {
-    position: absolute;
-    left: 5rem;
-    top: 20%;
+    position: relative;
+    left: 21%;
+    bottom: -2rem;
     transform: translateY(-50%);
     border-radius: 1rem;
     cursor: pointer;

@@ -78,7 +78,7 @@ export default function UserTeamsPage() {
 
       <div className={styles.container}>
         <header className={styles.heroHeader}>
-          <h1 className={styles.heroTitleMobile} style={{ fontSize: "3rem" }}>
+          <h1 className={styles.heroTitle} style={{ fontSize: "3rem" }}>
             Dream Teams by {username}
           </h1>
         </header>
