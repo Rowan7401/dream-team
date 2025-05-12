@@ -5,12 +5,18 @@ import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/DreamTeamLanding.module.css";
 
+import Head from "next/head";
+
 
 export default function DreamTeamLanding() {
   const router = useRouter();
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
+
       <div className={styles.nav}>
             <Navbar />
       </div>    

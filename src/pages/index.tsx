@@ -12,17 +12,37 @@ import styles from "@/styles/Home.module.css";
 import { FiEye, FiEyeOff } from "react-icons/fi"; // 👈 these are simple clean icons
 
 import MoonWithStars from "./moonWithStars";
+import Head from "next/head";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const [error, setError] = useState<string | null>(null);
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 5000); // clears after 5 seconds
+  
+      return () => clearTimeout(timer); // cleanup if component unmounts early
+    }
+  }, [error]);
+  
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (!email || !password) {
+      setError("Email and password fields cannot be blank.");
+      return;
+    }
 
     try {
       let userEmail = email;
@@ -43,8 +63,9 @@ export default function Home() {
       await signInWithEmailAndPassword(auth, userEmail, password);
       console.log("Logged in!");
       router.push("/dreamTeamLanding");
+
     } catch (err: any) {
-      setError(err.message);
+      setError("Invalid login");
     }
   };
 
@@ -62,6 +83,9 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <header className={styles.header}>
 
         <div className={styles.moonContainer}>
@@ -83,7 +107,17 @@ export default function Home() {
       <main className={styles.main}>
         <h2 className={styles.formTitle}>Log In</h2>
 
-        {error && <p className={styles.loginError}>{error}</p>}
+        {error && (
+          <>
+            <p className={styles.loginError}>{error}</p>
+            {error === "Invalid login" && (
+              <p className={styles.loginErrorMain}>
+                Incorrect Username and/or Password. Please try again.
+              </p>
+            )}
+          </>
+        )}
+
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -91,10 +125,9 @@ export default function Home() {
             <input
               type="text"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.toLowerCase())}
               className={styles.inputField}
               placeholder="person@email.com / username"
-              required
             />
           </div>
           <div style={{ position: "relative" }}>
@@ -115,7 +148,6 @@ export default function Home() {
               onChange={(e) => setPassword(e.target.value)}
               className={styles.inputField}
               placeholder="password123"
-              required
             />
           </div>
 

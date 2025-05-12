@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CurrentDreams.module.css";
+import Head from "next/head";
 
 
 interface DreamTeam {
@@ -32,7 +33,6 @@ export default function CurrentDreams() {
   const [dreams, setDreams] = useState<DreamTeam[]>([]);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState<string>("");
-  const router = useRouter();
   const params = useParams();
   const uid = params?.uid as string;
 
@@ -48,7 +48,7 @@ export default function CurrentDreams() {
       try {
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
-       
+
 
         if (!userDoc.exists()) {
           console.log("User document not found.");
@@ -111,6 +111,9 @@ export default function CurrentDreams() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -118,15 +121,19 @@ export default function CurrentDreams() {
         <header className={styles.heroHeader}>
           <h1 className={styles.heroTitle}>{username}'s Dream Teams</h1>
         </header>
-        
-          {loading ? (
-            <div className={styles.results}>
+
+        {loading ? (
+          <div className={styles.results}>
             <p>Loading...</p>
-          ) : dreams.length === 0 ? (
-            <p>No dream teams found. Create one from the home page!</p>
-            </div>
-          ) : (
+          </div>
+        ) : (
           <>
+            {dreams.length === 0 && (
+              <p className={styles.heroSubtitle}>
+                No dream teams found. Create one from the home page!
+              </p>
+            )}
+
             {dreams.filter((d) => d.source === "created").length > 0 && (
               <>
                 <h2 className={styles.sectionHeader}>🛠 Created by You</h2>
@@ -174,8 +181,8 @@ export default function CurrentDreams() {
                           }}>
                             Category:
                           </em> {dream.category}
-                          <p><strong>Created By:</strong> {dream.createdByUsername}</p>
                         </p>
+                        <p><strong>Created By:</strong> {dream.createdByUsername}</p>
                         {dream.cosignedBy && dream.cosignedBy.length > 0 && (
                           <p><em style={{ color: "#66acf7" }}>***Co-signed by:</em> {dream.cosignedBy.join(", ")}</p>
                         )}
@@ -189,7 +196,7 @@ export default function CurrentDreams() {
 
         <BackButton />
       </div>
-
     </>
   );
+
 }

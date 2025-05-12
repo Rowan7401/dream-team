@@ -10,7 +10,10 @@ import { arrayUnion } from "firebase/firestore";
 
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
-import { useRouter } from "next/router"; // For navigation
+
+import { useRouter } from "next/navigation"; // App Router version
+
+import Head from "next/head";
 
 
 
@@ -117,6 +120,9 @@ export default function SearchUsers() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.nav}>
             <Navbar />
       </div>    

@@ -8,6 +8,7 @@ import styles from "@/styles/SearchUsers.module.css";
 
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import Head from "next/head";
 
 type DreamTeam = {
   id: string;
@@ -72,6 +73,9 @@ export default function UserTeamsPage() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>

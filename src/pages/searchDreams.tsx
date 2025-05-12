@@ -8,6 +8,7 @@ import BackButton from "@/components/backButton";
 
 import { db } from "@/lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import Head from "next/head";
 
 interface DreamTeam {
   id: string;
@@ -94,6 +95,9 @@ export default function SearchDreams() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -154,7 +158,7 @@ export default function SearchDreams() {
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick1}</p>
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick2}</p>
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick3}</p>
-                  <p><em style={{ border: "groove", borderWidth: "0.25rem", backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
+                  <p style={{marginTop: "1rem", marginBottom: "1rem"}}><em style={{ padding: "0.1rem", border: "double", borderWidth: "0.2rem", backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
                   <p><strong>Created By:</strong> {dream.createdByUsername}</p>
 
                   {dream.cosignedBy && dream.cosignedBy.length > 0 && (

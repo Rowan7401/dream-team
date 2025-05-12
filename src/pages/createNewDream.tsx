@@ -10,6 +10,7 @@ import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 import styles from "@/styles/CreateNewDream.module.css";
 import CategorySelect from "@/components/categorySelect";
+import Head from "next/head";
 
 
 function normalizeInput(pick: string): string {
@@ -168,6 +169,9 @@ export default function CreateNewDream() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -196,7 +200,7 @@ export default function CreateNewDream() {
                 onClick={handleRandomTopic}
                 className={styles.surpriseButton}
               >
-                🎲 Surprise Me with a Topic
+                🎲 Surprise Me with an Idea
               </button>
              
             

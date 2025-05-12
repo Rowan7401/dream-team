@@ -110,8 +110,9 @@
     color: #ffe601e4;
     background: rgba(0, 0, 0, 0.598);
     box-shadow: 0 0 10px #ffffff, 0 0 20px #55545a, 0 0 30px #000000;
-    border-style: double;
-    border-width: 0.15rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 1.3rem;
     animation: fadeIn 1.5s ease-in-out;
     margin-bottom: 1rem;
     margin-top: 0.5rem;

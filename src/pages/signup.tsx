@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import styles from "@/styles/Signup.module.css";
 import MoonWithStars from "./moonWithStars";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import Head from "next/head";
 
 
 
@@ -65,6 +66,9 @@ export default function SignUp() {
 
   return (
     <>
+    <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
       <div className={styles.container}>
 
         <header className={styles.heroHeader}>

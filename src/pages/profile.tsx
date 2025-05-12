@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/Profile.module.css";
 import Navbar from "@/components/navbar";
+import Head from "next/head";
 
 export default function ProfilePage() {
     const [userData, setUserData] = useState<{ email: string; username: string; userId: string } | null>(null);
@@ -49,6 +50,9 @@ export default function ProfilePage() {
 
     return (
         <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </Head>
             <div className={styles.nav}>
                 <Navbar />
             </div>

@@ -2,6 +2,7 @@
 import type { AppProps } from 'next/app';
 import { Inter, Cormorant_Garamond } from 'next/font/google';
 import '../styles/global.css';
+import Head from 'next/head';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,6 +19,9 @@ const cormorant = Cormorant_Garamond({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className={`${inter.variable} ${cormorant.variable}`}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <Component {...pageProps} />
     </div>
   );

@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";  // Use this for Firebase v9+
 import { getFirestore } from "firebase/firestore";
+import { GoogleAuthProvider } from "firebase/auth";  // For Google auth provider
+
 
 import { getAnalytics } from "firebase/analytics";
 
@@ -15,10 +17,11 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!, // Optional
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig); // Initialize Firebase
+const auth = getAuth(app);  // Use getAuth for Firebase authentication
+const db = getFirestore(app); // Firestore database reference
+const provider = new GoogleAuthProvider(); // For Google Auth provider
+
 
 let analytics;
 if (typeof window !== "undefined") {
