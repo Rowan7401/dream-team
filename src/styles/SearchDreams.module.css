@@ -1,4 +1,8 @@
 @media screen and (max-width: 600px) {
+  .container {
+    max-width: 95% !important;    
+  }
+
   .heroTitle {
     font-size: 2rem !important;
     margin-top: 0.3rem !important;
@@ -25,46 +29,70 @@
     font-size: 1rem !important;
   }
 
+  .searchBar {
+    margin-bottom: 4.5rem !important;
+  }
   .input {
-    font-size: 0.9rem !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 1rem !important;
+    max-width: 95% !important;
+    width: 17rem !important;
+    height: 2.3rem !important; 
+  }
+  .searchButton {
+    margin-left: -1rem !important;
+    height: 2rem !important;
   }
   
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 90%;
+  width: 80rem;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0.2rem;
   text-align: center;
 }
 
 .searchBar {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  justify-self: center;
+  width: 70rem;
+  max-width: 90%;
+  height: 2.5rem;
 }
 
 .input {
   padding: 0.25rem;
   width: 60%;
+  height: 2.7rem;
   max-width: 80%;
-  border: 1px solid #ccc;
+  border-style: groove;
   border-radius: 0.2rem;
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+  border: 0.2rem solid #297fffd7;
   font-size: 1rem;
   margin-right: 0.5rem;
 }
 
 .searchButton {
   padding: 0.4rem;
+  margin-left: 1rem;
+  width: 7rem;
+  height: 100%;
   font-size: 1rem;
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 5px;
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+  border: 0.07rem solid #ccc;
+  border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .searchButton:hover {
-  background-color: #0056b3;
+  background-color: #eaeaea;
+  color: rgb(0, 0, 0);
 }
 
 .categoryButtons {

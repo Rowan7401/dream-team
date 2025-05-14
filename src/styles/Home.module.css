@@ -12,6 +12,12 @@
     margin-top: 0.1rem !important;
   }
 
+  .error {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.05rem !important;
+    margin-top: 0.01rem;
+  }
+
   .formTitle {
     font-size: 1.6rem !important;
   }
@@ -21,21 +27,23 @@
   }
 
   .main {
-    width: 80% !important;
+    width: 90% !important;
+    max-width: 95% !important;
+    height: 20rem !important;
   }
 
   .inputField {
     width: 98% !important;
-    font-size: 0.6rem !important;
+    font-size: 0.7rem !important;
   }
 
   .inputLabel {
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
   }
   
   .showPassword {
-    left: 4rem !important;
-    top: 1.9rem !important;
+    left: 5rem !important;
+    bottom: 3rem !important;
   }
   
   .button {
@@ -44,6 +52,16 @@
   } 
   
 }
+
+.error {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ff0000;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
 
 .moonContainer {
   margin-top: 1rem;
@@ -93,7 +111,6 @@
     margin-top: 0.3rem;
     
   }
-  
 
   .header p {
     font-size: 1rem;
@@ -129,13 +146,10 @@
   }
   
   .main {
-    width: 100%;
-    /* background: linear-gradient(
-      rgba(176, 97, 228, 0.3), 
-      rgba(232, 136, 244, 0.3)
-    ); */
     background: rgba(113, 58, 130, 0.15);
-    max-width: 28rem;
+    width: 40%;
+    height: 25rem;
+    max-width: 65%;
     border-radius: 1.25rem;
     box-shadow: 0 0.08rem 1.2rem rgba(0, 0, 0, 0.15); /* softer, bigger shadow */
     padding: 2rem;
@@ -166,7 +180,7 @@
   .inputField {
     opacity: 90%;
     font-size: 0.8rem;
-    width: 89%;
+    width: 95%;
     color: #ffffff; 
     background: rgba(255, 255, 255, 0.1); /* very faint white */
     border: 0.02rem solid rgba(255, 255, 255, 0.3); /* soft white border */
@@ -194,8 +208,8 @@
 
   .showPassword {
     position: relative;
-    left: 21%;
-    bottom: -2rem;
+    right: 80%;
+    bottom: 0.89rem;
     transform: translateY(-50%);
     border-radius: 1rem;
     cursor: pointer;

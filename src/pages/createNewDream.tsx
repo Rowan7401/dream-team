@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { db, auth } from "@/lib/firebaseConfig";
-import { collection, updateDoc, addDoc, getDoc, getDocs, doc } from "firebase/firestore";
+import { collection, updateDoc, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
 
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
@@ -30,7 +30,6 @@ export default function CreateNewDream() {
   const [pick3, setPick3] = useState("");
 
   const [category, setCategory] = useState("Sports");
-  const [customCategory, setCustomCategory] = useState("");
 
   const [error, setError] = useState("");
 
@@ -51,13 +50,50 @@ export default function CreateNewDream() {
     "Other"
   ];
 
+
+  const handleRandomTopic = async () => {
+    try {
+      const res = await fetch("https://rnd.bgenc.dev/v1/word?category=nouns&count=1&separator=+");
+      const word = await res.text();
+
+      const normalizedTopic = normalizeInput(word);
+
+      setTitle(normalizedTopic);         // Update title input
+      setCategory("Other");              // Switch to "Other" category
+    } catch (err) {
+      console.error("Failed to fetch random topic:", err);
+      setError("Couldn't fetch a random topic. Please try again.");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Reset error state
 
     const user = auth.currentUser;
     if (!user) {
       setError("You must be logged in to create a dream team.");
+      return;
+    }
+
+    const newPicks = [
+      normalizeInput(pick1),
+      normalizeInput(pick2),
+      normalizeInput(pick3)
+    ].sort();
+
+    if (title.trim().length === 0) {
+      setError("Blank Title. Please input a Title for your team.");
+      return;
+    }
+
+    if (newPicks.some((p) => p.length === 0)) {
+      setError("There must be 3 picks. Please fill in blank field(s).");
+      return;
+    }
+
+    if (new Set(newPicks).size !== 3) {
+      setError("Duplicate picks found. Please make dream team 3 unique picks.");
       return;
     }
 
@@ -70,17 +106,6 @@ export default function CreateNewDream() {
         const userData = userDoc.data();
         createdByUsername = userData.username || "Anonymous";
       }
-
-      const finalCategory =
-        category === "Other" && customCategory.trim()
-          ? customCategory.trim()
-          : category;
-
-      const newPicks = [
-        normalizeInput(pick1),
-        normalizeInput(pick2),
-        normalizeInput(pick3)
-      ].sort();
 
       const teamsRef = collection(db, "teams");
       const snapshot = await getDocs(teamsRef);
@@ -104,24 +129,21 @@ export default function CreateNewDream() {
       if (existingTeamDoc) {
         const existingData = existingTeamDoc.data();
         const teamRef = doc(db, "teams", existingTeamDoc.id);
-
         const currentCosignedBy: string[] = existingData.cosignedBy || [];
 
-        // Only add if not already cosigned
         if (!currentCosignedBy.includes(createdByUsername)) {
           await updateDoc(teamRef, {
             cosignedBy: [...currentCosignedBy, createdByUsername]
           });
         }
 
-        setSuccessMessage("✅  Co-signed existing Dream Team! 👊");
+        setSuccessMessage("✅ Co-signed existing Dream Team! 👊");
         setShowPopup(true);
-        setTimeout(() => {
-          router.push("/currentDreams");
-        }, 3500);
+       
+        router.push("/currentDreams");
+
         return;
       }
-
 
       // 🚀 No duplicate found — create new dream team
       await addDoc(teamsRef, {
@@ -129,49 +151,34 @@ export default function CreateNewDream() {
         pick1: normalizeInput(pick1),
         pick2: normalizeInput(pick2),
         pick3: normalizeInput(pick3),
-        category: finalCategory,
-        categoryLower: finalCategory.toLowerCase(),
+        category,
+        categoryLower: category.toLowerCase(),
         uid: user.uid,
         createdByUsername,
-        cosignedBy: [], // 🔥 new field, starts empty
+        cosignedBy: [],
         createdAt: new Date()
       });
 
       setSuccessMessage("✅ Thank you, dream team created! 😴💭");
       setShowPopup(true);
 
-      setTimeout(() => {
-        router.push("/currentDreams");
-      }, 3500);
-
+      
+      router.push("/currentDreams");
+    
     } catch (err) {
-      console.error("Error creating dream team:", err);
+      console.error("🔥 Firebase error:", err);
       setError("An error occurred while creating the dream team.");
     }
   };
 
-  const handleRandomTopic = async () => {
-    try {
-      const res = await fetch("https://rnd.bgenc.dev/v1/word?category=nouns&count=1&separator=+");
-      const word = await res.text();
 
-      const normalizedTopic = normalizeInput(word);
-
-      setTitle(normalizedTopic);         // Update title input
-      setCustomCategory(normalizedTopic); // Update custom category
-      setCategory("Other");              // Switch to "Other" category
-    } catch (err) {
-      console.error("Failed to fetch random topic:", err);
-      setError("Couldn't fetch a random topic. Please try again.");
-    }
-  };
 
 
   return (
     <>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -193,17 +200,15 @@ export default function CreateNewDream() {
 
         <div className={styles.card}>
 
-          <form onSubmit={handleSubmit} className={styles.form}>  
-              <p className={styles.heroSubtitle}> 🤔 Can't Think of Topic? 💭 </p>
-              <button
-                type="button"
-                onClick={handleRandomTopic}
-                className={styles.surpriseButton}
-              >
-                🎲 Surprise Me with an Idea
-              </button>
-             
-            
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <p className={styles.heroSubtitle}> 🤔 Can't Think of Topic? 💭 </p>
+            <button
+              type="button"
+              onClick={handleRandomTopic}
+              className={styles.surpriseButton}
+            >
+              🎲 Surprise Me with an Idea
+            </button>
 
             <input
               type="text"
@@ -211,7 +216,7 @@ export default function CreateNewDream() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className={styles.input}
-              required
+
             />
             <input
               type="text"
@@ -219,7 +224,7 @@ export default function CreateNewDream() {
               value={pick1}
               onChange={(e) => setPick1(e.target.value)}
               className={styles.input}
-              required
+
             />
             <input
               type="text"
@@ -227,7 +232,7 @@ export default function CreateNewDream() {
               value={pick2}
               onChange={(e) => setPick2(e.target.value)}
               className={styles.input}
-              required
+
             />
             <input
               type="text"
@@ -235,7 +240,7 @@ export default function CreateNewDream() {
               value={pick3}
               onChange={(e) => setPick3(e.target.value)}
               className={styles.input}
-              required
+
             />
 
             <CategorySelect
@@ -244,7 +249,7 @@ export default function CreateNewDream() {
               options={predefinedCategories}
             />
 
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p className={styles.error}>*** {error} ***</p>}
 
             <button type="submit" className={styles.button}>
               Create Team

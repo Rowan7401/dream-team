@@ -118,38 +118,41 @@ export default function Home() {
           </>
         )}
 
-
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className={styles.inputLabel}>Email/Username</label>
+            <label htmlFor="email/username" className={styles.inputLabel}>Email/Username</label>
             <input
+              id="email/username"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value.toLowerCase())}
               className={styles.inputField}
-              placeholder="person@email.com / username"
+              placeholder="garywinthorpe@example.com / gary"
             />
           </div>
-          <div style={{ position: "relative" }}>
-              {/* Eye Icon Button */}
-              <button
-              className={styles.showPassword}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
-            </button>
 
-          
-            <label className={styles.inputLabel}>Password</label>
+          <div style={{ position: "relative" }}>
+            <label htmlFor="password" className={styles.inputLabel}>Password</label>
+
             <input
+              id="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styles.inputField}
               placeholder="password123"
             />
+
+            {/* Eye Icon Button */}
+            <button
+              className={styles.showPassword}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+            </button>
           </div>
+
 
           <button type="submit" className={styles.button}>
             Log In

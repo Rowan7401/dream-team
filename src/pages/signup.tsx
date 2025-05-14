@@ -8,13 +8,11 @@ import { doc, setDoc, collection, query, where, getDocs } from "firebase/firesto
 
 import BackButton from "@/components/backButton";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import Head from "next/head";
+
 import styles from "@/styles/Signup.module.css";
 import MoonWithStars from "./moonWithStars";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import Head from "next/head";
-
-
-
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -30,6 +28,11 @@ export default function SignUp() {
 
     // Validate username format
     const allowedUsernameRegex = /^[a-z0-9!&$_-]+$/;
+
+    if (!email || !password || !username) {
+      setError("Username, Email, and password fields cannot be blank.");
+      return;
+    }
 
     if (!allowedUsernameRegex.test(username)) {
       setError("Username can only contain lowercase letters, numbers, !, &, $, _, or -.");
@@ -59,7 +62,7 @@ export default function SignUp() {
 
       router.push("/dreamTeamLanding");
     } catch (err: any) {
-      setError(err.message);
+      setError("Invalid signup");
     }
   };
 
@@ -86,29 +89,33 @@ export default function SignUp() {
         </header>
 
         <main className={styles.main}>
-          {error && <p className={styles.error}>*** {error} ***</p>}
+          {error && (
+          <>
+            <p className={styles.loginError}>***{error}***</p>
+          </>
+        )}
 
           <form onSubmit={handleSignUp} className="space-y-4">
             <div>
-              <label className={styles.inputLabel}>Username</label>
+              <label htmlFor="username" className={styles.inputLabel}>Username</label>
               <input
                 type="text"
+                id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value.toLowerCase())}
                 className={styles.inputField}
                 placeholder="Username"
-                required
               />
             </div>
             <div>
-              <label className={styles.inputLabel}>Email</label>
+              <label htmlFor="email" className={styles.inputLabel}>Email</label>
               <input
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.inputField}
-                placeholder="you@example.com"
-                required
+                placeholder="garywinthorpe@example.com"
               />
             </div>
 
@@ -123,15 +130,16 @@ export default function SignUp() {
               </button>
 
 
-              <label className={styles.inputLabel}>Password</label>
+              <label htmlFor="password" className={styles.inputLabel}>Password</label>
               <input
+                id="password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.inputField}
                 placeholder="password123"
-                required
               />
+              
             </div>
 
             <button type="submit" className={styles.button}>

@@ -49,6 +49,7 @@
     margin-top: 0.01rem;
   }
 
+
   .inputLabel {
     font-size: 0.8rem !important;
   }
@@ -171,6 +172,22 @@
   color: #ff0000;
   margin-bottom: 0.25rem;
   text-align: center;
+}
+
+.loginErrorMain {
+  font-size: 1rem;
+  margin-top: -1rem;
+  font-weight: 400;
+  color: #fda10cef;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.loginError {
+  font-size: 1rem;
+  margin-top: 0.01rem;
+  font-weight: 400;
+  color: #fd0c0cc0;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 

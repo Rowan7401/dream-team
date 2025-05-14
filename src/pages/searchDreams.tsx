@@ -112,7 +112,7 @@ export default function SearchDreams() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for a dream team..."
+            placeholder="Search for a dream team by title..."
             className={styles.input}
           />
           <button
@@ -133,8 +133,6 @@ export default function SearchDreams() {
               }}
               className={`${styles.categoryButton} ${selectedCategory === cat ? styles.activeButton : ""}`}
             >
-
-
               {cat
                 .split(" ")
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -143,7 +141,6 @@ export default function SearchDreams() {
 
           ))}
         </div>
-
 
         <div className={styles.results}>
           {loading ? (

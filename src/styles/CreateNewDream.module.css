@@ -58,10 +58,11 @@
 }
 
 .popup {
-  position: fixed;
-  top: 20%;
+  position: relative;
+  top: 50%;
+  right: 50%;
   background-color: #f0fdf4;
-  color: #1f6e11b2;
+  color: #0bb335b2;
   padding: 1.5rem 2rem;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
@@ -95,7 +96,6 @@
   transform: scale(1.01);
   transition: transform 0.3s ease;
 }
-
 
 .dismissButton {
   margin-top: 1rem;
@@ -131,9 +131,6 @@
   transform: scale(1.01);
   transition: transform 0.3s ease;
 }
-
-
-
 
 .container {
   display: flex;
@@ -215,15 +212,19 @@
   .input,
   .select {
     background: rgba(255, 255, 255, 0.1);
-    color: #f1f1f1;
+    color: #ffffffdb;
     border: 0.1rem solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(128, 128, 128, 0.145);
+    background-color: rgba(128, 128, 128, 0.245);
     box-shadow: 0 0 0.5rem #6923ffb0, 0 0 0.7rem #3510efa4, 0 0 0.9rem #0000004d;
     border-radius: 0.7rem;
     padding: 0.8rem;
     font-size: 0.85rem;
     background-position: right 0.8rem center;
     background-size: 1.2rem;
+  }
+
+  .input::placeholder {
+    color: rgba(255, 255, 255, 0.699); 
   }
   
   .select:focus {
