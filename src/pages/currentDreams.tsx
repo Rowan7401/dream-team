@@ -110,7 +110,7 @@ export default function CurrentDreams() {
 
 
   return (
-    <>
+    <div className="background page-transition">
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
@@ -196,7 +196,7 @@ export default function CurrentDreams() {
 
         <BackButton />
       </div>
-    </>
+    </div>
   );
 
 }

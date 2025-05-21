@@ -83,7 +83,20 @@ describe("Signup", () => {
   it("shows error if username is already taken", async () => {
     render(<Signup />);
 
-    (getDocs as jest.Mock).mockResolvedValue({ empty: false, });
+    const mockDocData = {
+      username: "schlinger",
+      email: "rowdiggity7401@gmail.com",
+      password: "password123",
+    };
+
+    const mockDocRef = {
+      id: "mockDocId",
+      data: () => mockDocData,
+    };
+
+    (getDocs as jest.Mock).mockResolvedValue({
+      docs: [mockDocRef], // simulate one matching doc
+    });
 
     fireEvent.change(screen.getByPlaceholderText(/username/i), {
       target: { value: "schlinger" },
@@ -107,7 +120,7 @@ describe("Signup", () => {
 
   it("redirects on successful signup", async () => {
     (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
-      user: { username: "dawgs", email: "you@example.com", password: "password123" }
+      user: { username: "mole", email: "skunk01@gmail.com", password: "password123" }
     });
 
     render(<Signup />);
@@ -115,11 +128,11 @@ describe("Signup", () => {
     (getDocs as jest.Mock).mockResolvedValue({ empty: true }); // allow signup to proceed
 
     fireEvent.change(screen.getByPlaceholderText(/username/i), {
-      target: { value: "schlinger" },
+      target: { value: "mole" },
     });
 
     fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com/i), {
-      target: { value: "rowdiggity7401@gmail.com" },
+      target: { value: "skunk01@gmail.com" },
     });
 
     fireEvent.change(screen.getByPlaceholderText(/password123/i), {

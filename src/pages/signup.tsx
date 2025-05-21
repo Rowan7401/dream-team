@@ -68,10 +68,10 @@ export default function SignUp() {
 
 
   return (
-    <>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+    <div className="background page-transition">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className={styles.container}>
 
         <header className={styles.heroHeader}>
@@ -90,10 +90,10 @@ export default function SignUp() {
 
         <main className={styles.main}>
           {error && (
-          <>
-            <p className={styles.loginError}>***{error}***</p>
-          </>
-        )}
+            <>
+              <p className={styles.loginError}>***{error}***</p>
+            </>
+          )}
 
           <form onSubmit={handleSignUp} className="space-y-4">
             <div>
@@ -113,7 +113,7 @@ export default function SignUp() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value.toLowerCase())}
                 className={styles.inputField}
                 placeholder="garywinthorpe@example.com"
               />
@@ -139,7 +139,7 @@ export default function SignUp() {
                 className={styles.inputField}
                 placeholder="password123"
               />
-              
+
             </div>
 
             <button type="submit" className={styles.button}>
@@ -156,6 +156,6 @@ export default function SignUp() {
         </main>
         <BackButton />
       </div>
-    </>
+    </div>
   );
 }

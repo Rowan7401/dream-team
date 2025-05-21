@@ -1,11 +1,14 @@
 @media screen and (max-width: 600px) {
   .backButton {
     font-size: 1rem !important;
-    top: 1rem !important;
-    left: -7rem !important;
+    top: 3rem !important;
+    margin-bottom: 5rem !important;
+    left: -8% !important;
     max-width: 35% !important;
+    width: 5.5rem !important;
     padding: 0.2rem !important;
     justify-items: center;
+    
   }
   
 }
@@ -13,7 +16,8 @@
 .backButton {
   position: relative;
   top: 7rem; 
-  left: -25rem;
+  margin-bottom: 0.5rem;
+  left: -75%;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
   color: white;

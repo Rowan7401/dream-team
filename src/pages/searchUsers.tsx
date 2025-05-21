@@ -119,7 +119,7 @@ export default function SearchUsers() {
   
 
   return (
-    <>
+    <div className="background page-transition">
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
@@ -137,7 +137,7 @@ export default function SearchUsers() {
             type="text"
             placeholder="Enter username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
             className={styles.input}
           />
           <button onClick={handleSearch} className={styles.searchButton}>
@@ -205,6 +205,6 @@ export default function SearchUsers() {
         <BackButton />
       </div>
       
-    </>
+    </div>
   );
 }

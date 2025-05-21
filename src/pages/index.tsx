@@ -28,11 +28,11 @@ export default function Home() {
       const timer = setTimeout(() => {
         setError(null);
       }, 5000); // clears after 5 seconds
-  
+
       return () => clearTimeout(timer); // cleanup if component unmounts early
     }
   }, [error]);
-  
+
 
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -82,94 +82,96 @@ export default function Home() {
 
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <header className={styles.header}>
+    <div className="background page-transition">
+      <div className={styles.container}>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </Head>
+        <header className={styles.header}>
 
-        <div className={styles.moonContainer}>
-          <MoonWithStars />
-          <h1 className={styles.heroTitle}>Dream Team</h1>
-        </div>
-
-
-        <h2 className={styles.heroSubtitle}>Assemble your perfect team</h2>
-        <Image
-          className={styles.logo}
-          src="/dream-team-logo.jpg"
-          alt="Team Illustration"
-          width={320}   
-          height={250}  
-        />
-      </header>
-
-      <main className={styles.main}>
-        <h2 className={styles.formTitle}>Log In</h2>
-
-        {error && (
-          <>
-            <p className={styles.loginError}>{error}</p>
-            {error === "Invalid login" && (
-              <p className={styles.loginErrorMain}>
-                Incorrect Username and/or Password. Please try again.
-              </p>
-            )}
-          </>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label htmlFor="email/username" className={styles.inputLabel}>Email/Username</label>
-            <input
-              id="email/username"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value.toLowerCase())}
-              className={styles.inputField}
-              placeholder="garywinthorpe@example.com / gary"
-            />
+          <div className={styles.moonContainer}>
+            <MoonWithStars />
+            <h1 className={styles.heroTitle}>Dream Team</h1>
           </div>
 
-          <div style={{ position: "relative" }}>
-            <label htmlFor="password" className={styles.inputLabel}>Password</label>
 
-            <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.inputField}
-              placeholder="password123"
-            />
+          <h2 className={styles.heroSubtitle}>Assemble your perfect team</h2>
+          <Image
+            className={styles.logo}
+            src="/dream-team-logo.jpg"
+            alt="Team Illustration"
+            width={320}
+            height={250}
+          />
+        </header>
 
-            {/* Eye Icon Button */}
-            <button
-              className={styles.showPassword}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+        <main className={styles.main}>
+          <h2 className={styles.formTitle}>Log In</h2>
+
+          {error && (
+            <>
+              <p className={styles.loginError}>{error}</p>
+              {error === "Invalid login" && (
+                <p className={styles.loginErrorMain}>
+                  Incorrect Username and/or Password. Please try again.
+                </p>
+              )}
+            </>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="email/username" className={styles.inputLabel}>Email/Username</label>
+              <input
+                id="email/username"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                className={styles.inputField}
+                placeholder="garywinthorpe@example.com / gary"
+              />
+            </div>
+
+            <div style={{ position: "relative" }}>
+              <label htmlFor="password" className={styles.inputLabel}>Password</label>
+
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.inputField}
+                placeholder="password123"
+              />
+
+              {/* Eye Icon Button */}
+              <button
+                className={styles.showPassword}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff style={{ color: "white" }} /> : <FiEye style={{ color: "white" }} />}
+              </button>
+            </div>
+
+
+            <button type="submit" className={styles.button}>
+              Log In
             </button>
-          </div>
+          </form>
 
-
-          <button type="submit" className={styles.button}>
-            Log In
-          </button>
-        </form>
-
-        {/* <button onClick={handleGoogleLogin} className={styles.googleButton}>
+          {/* <button onClick={handleGoogleLogin} className={styles.googleButton}>
           Log in with Google
         </button> */}
 
-        <p className={styles.textCenter}>
-          Don’t have an account?{" "}
-          <Link href="/signup" className={styles.textLink}>
-            Sign up
-          </Link>
-        </p>
-      </main>
+          <p className={styles.textCenter}>
+            Don’t have an account?{" "}
+            <Link href="/signup" className={styles.textLink}>
+              Sign up
+            </Link>
+          </p>
+        </main>
+      </div>
     </div>
   );
 }

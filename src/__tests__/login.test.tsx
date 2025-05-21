@@ -8,8 +8,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import '@testing-library/jest-dom';
 
 beforeAll(() => {
-  jest.spyOn(console, "log").mockImplementation(() => {});
-  jest.spyOn(console, "error").mockImplementation(() => {});
+  jest.spyOn(console, "log").mockImplementation(() => { });
+  jest.spyOn(console, "error").mockImplementation(() => { });
 });
 
 // Mock Firebase Auth
@@ -50,21 +50,16 @@ describe("LoginPage", () => {
   });
 
   it("shows error on invalid credentials", async () => {
-    (getDocs as jest.Mock).mockResolvedValue({
-      empty: false,
-      docs: [{ data: () => ({ email: "person@email.com" }) }],
-    });
-
     (signInWithEmailAndPassword as jest.Mock).mockRejectedValue(new Error("Invalid login"));
 
     render(<LoginPage />);
 
     fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com \/ gary/i), {
-      target: { value: "username" },
+      target: { value: "schlinger" },
     });
 
     fireEvent.change(screen.getByPlaceholderText(/password123/i), {
-      target: { value: "password123" },
+      target: { value: "password12345" }, // incorrect password
     });
 
     const loginButton = screen.getByRole("button", { name: /log in/i });
@@ -72,48 +67,10 @@ describe("LoginPage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText((content) =>
-          content.includes("Incorrect Username and/or Password")
-        )
+        screen.getByText(/Incorrect Username and\/or Password/i)
       ).toBeInTheDocument();
     });
-
   });
-
-  // beforeEach(() => {
-  //   jest.useFakeTimers(); // Enable fake timers
-  //   (useRouter as jest.Mock).mockReturnValue({ push });
-  //   jest.clearAllMocks();
-  // });
-
-  // afterEach(() => {
-  //   jest.useRealTimers(); // Restore real timers after each test
-  // });
-
-  // it("shows and clears error after 5 seconds", async () => {
-  //   render(<LoginPage />);
-
-  //   // Trigger error condition
-  //   fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com/i), {
-  //     target: { value: "wronguser@example.com" },
-  //   });
-
-  //   fireEvent.change(screen.getByPlaceholderText(/password123/i), {
-  //     target: { value: "wrongpassword" },
-  //   });
-
-  //   const loginButton = screen.getByRole("button", { name: /log in/i });
-  //   fireEvent.click(loginButton);
-
-  //   // Check that error message appears
-  //   expect(await screen.findByText(/invalid login/i)).toBeInTheDocument();
-
-  //   // Fast forward 5 seconds (5000 ms)
-  //   jest.advanceTimersByTime(5000);
-
-  //   // Check if the error message has been cleared
-  //   expect(screen.queryByText(/invalid login/i)).not.toBeInTheDocument();
-  // });
 
 
   it("shows error if username is not found", async () => {
@@ -130,8 +87,6 @@ describe("LoginPage", () => {
     });
 
     fireEvent.click(screen.getByRole("button", { name: /log in/i }));
-
-    screen.debug(); // TEMP: View what's rendered
 
     await waitFor(() =>
       expect(screen.getByText("Username not found")).toBeInTheDocument()

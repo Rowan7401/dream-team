@@ -72,7 +72,7 @@ export default function UserTeamsPage() {
   if (teams.length === 0) return <p>{username} has no dream teams yet.</p>;
 
   return (
-    <>
+    <div className="background page-transition">
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
@@ -154,6 +154,6 @@ export default function UserTeamsPage() {
       </div>
 
       <BackButton />
-    </>
+    </div>
   );
 }

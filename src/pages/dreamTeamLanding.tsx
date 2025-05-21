@@ -12,49 +12,50 @@ export default function DreamTeamLanding() {
   const router = useRouter();
 
   return (
-    <>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+    <div className="background page-transition">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
 
       <div className={styles.nav}>
-            <Navbar />
-      </div>    
-        <div className={styles.container}>
+        <Navbar />
+      </div>
+      <div className={styles.container}>
         <header className={styles.heroHeader}>
           <h1 className={styles.heroTitle}>Dream Team</h1>
           <p className={styles.heroSubtitle}>Dream, Discover, and Co-Sign the Ultimate Teams</p>
         </header>
 
-          <main className={styles.main}>
-            <button
-              className={styles.button}
-              onClick={() => router.push("/searchDreams")}
-            >
-              Search Dream Teams
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => router.push("/searchUsers")}
-            >
-              Search Users
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => router.push("/createNewDream")}
-            >
-              Create New Dream Team
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => router.push("/currentDreams")}
-            >
-              View Current Dream Teams
-            </button>
-          </main>
-          
-          <BackButton/>
-        </div>
-        </>
+        <main className={styles.main}>
+          <button
+            className={styles.button}
+            onClick={() => router.push("/searchDreams")}
+          >
+            Search Dream Teams
+          </button>
+          <button
+            className={styles.button}
+            onClick={() => router.push("/searchUsers")}
+          >
+            Search Users
+          </button>
+          <button
+            className={styles.button}
+            onClick={() => router.push("/createNewDream")}
+          >
+            Create New Dream Team
+          </button>
+          <button
+            className={styles.button}
+            onClick={() => router.push("/currentDreams")}
+          >
+            View Current Dream Teams
+          </button>
+        </main>
+
+        <BackButton />
+      </div>
+    </div>
+     
   );
 }

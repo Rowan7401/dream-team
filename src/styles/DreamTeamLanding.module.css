@@ -3,7 +3,7 @@
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(2.5rem);
   }
   100% {
     opacity: 1;
@@ -109,7 +109,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     color: rgba(255, 255, 255, 0.115);
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
     text-shadow: 0 0 0.3rem rgb(249, 231, 30), 
                  0 0 0.15rem rgba(245, 234, 136, 0.884);
                  
@@ -119,7 +119,7 @@
     font-size: 1.3rem;
     font-weight: 400;
     color: #ffffffec;
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 2.5s ease-in-out;
     margin-bottom: 3rem;
     
   }

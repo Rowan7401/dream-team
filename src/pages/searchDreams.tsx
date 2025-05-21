@@ -94,7 +94,7 @@ export default function SearchDreams() {
   ];
 
   return (
-    <>
+    <div className="background page-transition">
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
@@ -169,6 +169,6 @@ export default function SearchDreams() {
 
         <BackButton />
       </div>
-    </>
+    </div>
   );
 }
