@@ -60,7 +60,9 @@
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-    width: 100%;
+    width: 70%;
+    margin-right: 1.5rem;
+    height: 2.7rem;
   }
   
   .input {
@@ -75,11 +77,12 @@
   .searchButton {
     padding: 0.5rem;
     font-family: var(--font-cormorant);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    width: 7rem;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.2rem;
     cursor: pointer;
   }
   
@@ -111,10 +114,29 @@
     text-align: left;
   }
   
-  .error {
-    color: red;
-    margin-bottom: 1rem;
+  .userSearchErrorMain {
+    font-size: 1rem;
+    margin-top: -1rem;
+    font-weight: 400;
+    color: #fda10cef;
+    transition: opacity 0.5s ease-in-out;
   }
+
+  .userSearchError {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    color: red;
+    margin: 1rem 0;
+  }
+
+  .userSearchErrorHidden {
+    opacity: 0;
+  }
+
+  .userSearchErrorMainHidden {
+    opacity: 0;
+  }
+  
   
   .resultCard {
     border-radius: 10%;

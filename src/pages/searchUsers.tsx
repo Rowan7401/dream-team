@@ -19,12 +19,42 @@ import Head from "next/head";
 
 
 export default function SearchUsers() {
-  const [username, setUsername] = useState("");
+  const [searchUsername, setSearchUsername] = useState("");
+
   const [results, setResults] = useState<any[]>([]);
   const [friends, setFriends] = useState<any[]>([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [showFriends, setShowFriends] = useState(false); // State to toggle between search and friends
   const router = useRouter(); // Using router for navigation
+
+  const getTeamCounts = async (username: string) => {
+    const teamsRef = collection(db, "teams");
+
+    const createdQuery = query(teamsRef, where("createdByUsername", "==", username));
+    const createdSnapshot = await getDocs(createdQuery);
+
+    const cosignedQuery = query(teamsRef, where("cosignedBy", "array-contains", username));
+    const cosignedSnapshot = await getDocs(cosignedQuery);
+
+    return {
+      authored: createdSnapshot.size,
+      cosigned: cosignedSnapshot.size,
+    };
+  };
+
+
+
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => {
+        setError(null);
+      }, 3000); // 3 seconds
+
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
+
+
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -37,64 +67,96 @@ export default function SearchUsers() {
     if (!auth.currentUser) return;
 
     try {
-      const userDocRef = doc(db, "users", auth.currentUser.uid); // Current user document
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
       const userDoc = await getDoc(userDocRef);
+
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        setFriends(userData.friends || []); // Assuming friends are an array in the user's data
+        const friendsArray = userData?.friends || [];
+
+        const enrichedFriends = await Promise.all(
+          friendsArray.map(async (friend: any) => {
+            const counts = await getTeamCounts(friend.username);
+            return { ...friend, ...counts };
+          })
+        );
+
+        setFriends(enrichedFriends);
       }
     } catch (err) {
       console.error("Error fetching friends:", err);
     }
   };
 
+
   const handleSearch = async () => {
     setError("");
     setResults([]);
 
     try {
-      const q = query(collection(db, "users"), where("username", "==", username));
-      const querySnapshot = await getDocs(q);
-
-      const users: any[] = [];
-      querySnapshot.forEach((doc) => users.push(doc.data()));
-
-      if (users.length === 0) {
-        setError("No users found with that username.");
-      } else {
-        setShowFriends(false);
-        setResults(users);
+      if (searchUsername.length === 0) {
+        setError("Invalid (empty) search");
+        return;
       }
+
+      const q = query(collection(db, "users"), where("username", "==", searchUsername));
+      const querySnapshot = await getDocs(q);
+      console.log("Query snapshot raw docs:");
+      querySnapshot.forEach(doc => {
+        console.log("DOC ID:", doc.id, "DATA:", doc.data());
+      });
+
+      if (querySnapshot.empty) {
+        setError("No users found with that username.");
+        return;
+      }
+
+      const users = querySnapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
+
+
+      // Enrich all users with team counts (even if there's only 1 user)
+      const enrichedUsers = await Promise.all(
+        users.map(async (user) => {
+          const counts = await getTeamCounts(user.username);
+          return { ...user, ...counts }; // 'authored' and 'cosigned' are now in the user object
+        })
+      );
+
+
+
+      setShowFriends(false);
+      setResults(enrichedUsers);
     } catch (err: any) {
+      console.error("Error fetching users:", err);
       setError("Error fetching users.");
-      console.error(err);
     }
   };
-  
+
+
   const handleViewFriends = () => {
     setShowFriends(true);
   };
 
   const handleAddFriend = async (friend: any) => {
     if (!auth.currentUser) return;
-  
+
     const userDocRef = doc(db, "users", auth.currentUser.uid);
-  
+
     try {
       // Fetch the user document
       const userDoc = await getDoc(userDocRef);
       const userData = userDoc.data();
-  
+
       // Check if friends field exists and is an array
       const friendsList = userData?.friends || []; // Default to an empty array if friends doesn't exist
-  
+
       const isFriendAlready = friendsList.some((f: any) => f.uid === friend.uid);
-  
+
       if (isFriendAlready) {
         alert("This user is already your friend!");
         return;
       }
-  
+
       // If not, add them to the friends list
       await updateDoc(userDocRef, {
         friends: arrayUnion({
@@ -103,50 +165,62 @@ export default function SearchUsers() {
           email: friend.email
         })
       });
-  
+
       alert(`${friend.username} has been added as a friend!`);
       fetchFriends(); // Re-fetch friends to update the list
     } catch (err) {
       console.error("Error adding friend:", err);
-      alert("Failed to add friend.");
+      setError("Failed to add friend.");
     }
   };
-  
+
 
   const handleViewDreams = (friendUsername: string) => {
     router.push(`/userTeams/${friendUsername}`);
   };
-  
+
 
   return (
     <div className="background page-transition">
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+      </Head>
       <div className={styles.nav}>
-            <Navbar />
-      </div>    
+        <Navbar />
+      </div>
       <div className={styles.container}>
         <header className={styles.heroHeader}>
           <h1 className={styles.heroTitle}>Search Users</h1>
         </header>
 
-        {/* Search Input */}
+        {error && (
+          <>
+            <p className={`${styles.userSearchError} ${!error ? styles.userSearchErrorHidden : ""}`}>
+              {error}
+            </p>
+
+            {error === "Invalid (empty) search" && (
+              <p className={`${styles.userSearchErrorMain} ${!error ? styles.userSearchErrorMainHidden : ""}`}>
+                Please type a valid Username or a partial Username.
+              </p>
+            )}
+          </>
+        )}
+
+
         <div className={styles.searchBar}>
           <input
+            className={styles.searchBar}
             type="text"
             placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value.toLowerCase())}
-            className={styles.input}
+            value={searchUsername}
+            onChange={(e) => setSearchUsername(e.target.value.toLowerCase())}
           />
+
           <button onClick={handleSearch} className={styles.searchButton}>
             Search
           </button>
         </div>
-
-        {/* Error Message */}
-        {error && <p className={styles.error}>{error}</p>}
 
         {/* Toggle between Search Results and Friends */}
         <div className={styles.buttonContainer}>
@@ -164,6 +238,9 @@ export default function SearchUsers() {
                 <div key={index} className={styles.resultCard}>
                   <p><strong>Username:</strong> {friend.username}</p>
                   <p><strong>Email:</strong> {friend.email}</p>
+                  <p><strong>Dream Teams Authored:</strong> {friend.authored ?? "Loading..."}</p>
+                  <p><strong>Dream Teams Co-signed:</strong> {friend.cosigned ?? "Loading..."}</p>
+
                   <button
                     onClick={() => handleViewDreams(friend.username)} // Use friend's username here
                     className={styles.viewDreamTeamsButton}
@@ -186,6 +263,9 @@ export default function SearchUsers() {
               results.map((user, index) => (
                 <div key={index} className={styles.resultCard}>
                   <p><strong>Username:</strong> {user.username}</p>
+                  <p><strong>Dream Teams Authored:</strong> {user.authored ?? "Loading..."}</p>
+                  <p><strong>Dream Teams Co-signed:</strong> {user.cosigned ?? "Loading..."}</p>
+
                   <button onClick={() => handleAddFriend(user)} className={styles.addFriendButton}>
                     Add Friend
                   </button>
@@ -204,7 +284,7 @@ export default function SearchUsers() {
         )}
         <BackButton />
       </div>
-      
-    </div>
+
+    </div >
   );
 }

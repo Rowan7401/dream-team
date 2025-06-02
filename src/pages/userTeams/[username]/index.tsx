@@ -68,14 +68,16 @@ export default function UserTeamsPage() {
     fetchTeams();
   }, [username]);
 
+  const createdTeams = teams.filter((team) => team.source === "created");
+  const cosignedTeams = teams.filter((team) => team.source === "cosigned");
+
   if (loading) return <p>Loading dream teams for {username}...</p>;
   if (teams.length === 0) return <p>{username} has no dream teams yet.</p>;
-
   return (
     <div className="background page-transition">
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+      </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -87,70 +89,77 @@ export default function UserTeamsPage() {
           </h1>
         </header>
 
-        {teams.filter((team) => team.source === "created").length > 0 && (
+        {createdTeams.length > 0 && (
           <>
-            <h2 className={styles.sectionHeader}>🛠 Created by {username}</h2>
+            <h2 className={styles.sectionHeader}>
+              🛠 Created by {username} ({createdTeams.length})
+            </h2>
             <div className={styles.grid}>
-              {teams
-                .filter((team) => team.source === "created")
-                .map((team) => (
-                  <div key={team.id} className={styles.resultCard}>
-                    <h2>{team.title}</h2>
-                    <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick1}
-                    </p>
-                    <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick2}
-                    </p>
-                    <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick3}
-                    </p>
-                    <p className={styles.heroSubtitle}>
-                      <em style={{ border: "groove", borderWidth: "0.25rem", backgroundColor: "rgb(183, 183, 183)" }}>
-                        Category:
-                      </em>{" "}
-                      {team.category}
-                    </p>
-                  </div>
-                ))}
+              {createdTeams.map((team) => (
+                <div key={team.id} className={styles.resultCard}>
+                  <h2>{team.title}</h2>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick1}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick2}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick3}
+                  </p>
+                  <p className={styles.heroSubtitle}>
+                    <em style={{ border: "groove", borderWidth: "0.25rem", backgroundColor: "rgb(183, 183, 183)" }}>
+                      Category:
+                    </em>{" "}
+                    {team.category}
+                  </p>
+                </div>
+              ))}
             </div>
           </>
         )}
 
-        {teams.filter((team) => team.source === "cosigned").length > 0 && (
+        {cosignedTeams.length > 0 && (
           <>
-            <h2 className={styles.sectionHeader}>🤝 Co-signed by {username}</h2>
+            <h2 className={styles.sectionHeader}>
+              🤝 Co-signed by {username} ({cosignedTeams.length})
+            </h2>
             <div className={styles.grid}>
-              {teams
-                .filter((team) => team.source === "cosigned")
-                .map((team) => (
-                  <div key={team.id} className={styles.resultCard}>
-                    <h2>{team.title}</h2>
+              {cosignedTeams.map((team) => (
+                <div key={team.id} className={styles.resultCard}>
+                  <h2>{team.title}</h2>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick1}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick2}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick3}
+                  </p>
+                  <p className={styles.heroSubtitle}>
+                    <em style={{ border: "groove", borderWidth: "0.25rem", backgroundColor: "rgb(183, 183, 183)" }}>
+                      Category:
+                    </em>{" "}
+                    {team.category}
+                  </p>
+                  <p>
+                    <strong>Created By:</strong> {team.createdByUsername}
+                  </p>
+                  {team.cosignedBy && team.cosignedBy.length > 0 && (
                     <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick1}
+                      <em style={{ color: "#66acf7" }}>Co-signed by:</em> {team.cosignedBy.join(", ")}
                     </p>
-                    <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick2}
-                    </p>
-                    <p>
-                      <strong style={{ fontSize: "1.3rem" }}>✦ </strong> {team.pick3}
-                    </p>
-                    <p className={styles.heroSubtitle}>
-                      <em style={{ border: "groove", borderWidth: "0.25rem", backgroundColor: "rgb(183, 183, 183)" }}>
-                        Category:
-                      </em>{" "}
-                      {team.category}
-                    </p>
-                    {team.cosignedBy && team.cosignedBy.length > 0 && (
-                      <p>
-                        <em style={{ color: "#66acf7" }}>Co-signed by:</em> {team.cosignedBy.join(", ")}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                  )}
+                </div>
+              ))}
             </div>
           </>
         )}
+
+        <p>
+          <strong>Total Dream Teams:</strong> {teams.length}
+        </p>
       </div>
 
       <BackButton />

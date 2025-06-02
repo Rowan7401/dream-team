@@ -1,26 +1,29 @@
-jest.mock('@/lib/firebaseConfig');
+/**
+ * @jest-environment jsdom
+ */
 
-import { getDocs } from "firebase/firestore";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import LoginPage from "@/pages/index";
-import { useRouter } from "next/navigation";
+import { getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
-beforeAll(() => {
-  jest.spyOn(console, "log").mockImplementation(() => { });
-  jest.spyOn(console, "error").mockImplementation(() => { });
-});
+// ✅ Mock router push function
+const push = jest.fn();
 
-// Mock Firebase Auth
+// ✅ Mock next/navigation
+jest.mock("next/navigation", () => ({
+  useParams: jest.fn(() => ({ uid: "test-uid" })),
+  useRouter: () => ({ push }),
+  usePathname: jest.fn(() => "/"),
+}));
+
+// ✅ Mock firebase/auth
 jest.mock("firebase/auth", () => ({
   signInWithEmailAndPassword: jest.fn(),
 }));
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
+// ✅ Mock firebase/firestore
 jest.mock("firebase/firestore", () => {
   const original = jest.requireActual("firebase/firestore");
   return {
@@ -32,17 +35,26 @@ jest.mock("firebase/firestore", () => {
   };
 });
 
-describe("LoginPage", () => {
-  const push = jest.fn();
+// ✅ Mock firebaseConfig
+jest.mock("@/lib/firebaseConfig", () => ({
+  auth: {
+    currentUser: { uid: "test-uid" },
+  },
+  db: {},
+}));
 
+beforeAll(() => {
+  jest.spyOn(console, "log").mockImplementation(() => {});
+  jest.spyOn(console, "error").mockImplementation(() => {});
+});
+
+describe("LoginPage", () => {
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({ push });
     jest.clearAllMocks();
   });
 
   it("shows error on blank email or password", async () => {
     render(<LoginPage />);
-
     const loginButton = screen.getByRole("button", { name: /log in/i });
     fireEvent.click(loginButton);
 
@@ -50,49 +62,43 @@ describe("LoginPage", () => {
   });
 
   it("shows error on invalid credentials", async () => {
+    (getDocs as jest.Mock).mockResolvedValue({
+      empty: false,
+      docs: [{ data: () => ({ email: "person@email.com" }) }],
+    });
+
     (signInWithEmailAndPassword as jest.Mock).mockRejectedValue(new Error("Invalid login"));
 
     render(<LoginPage />);
-
     fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com \/ gary/i), {
-      target: { value: "schlinger" },
+      target: { value: "person@email.com" },
     });
-
     fireEvent.change(screen.getByPlaceholderText(/password123/i), {
-      target: { value: "password12345" }, // incorrect password
+      target: { value: "wrongpassword" },
     });
-
-    const loginButton = screen.getByRole("button", { name: /log in/i });
-    fireEvent.click(loginButton);
+    fireEvent.click(screen.getByRole("button", { name: /log in/i }));
 
     await waitFor(() => {
-      expect(
-        screen.getByText(/Incorrect Username and\/or Password/i)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Incorrect Username and\/or Password/i)).toBeInTheDocument();
     });
   });
-
 
   it("shows error if username is not found", async () => {
     (getDocs as jest.Mock).mockResolvedValue({ empty: true });
 
     render(<LoginPage />);
-
     fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com \/ gary/i), {
-      target: { value: "username" },
+      target: { value: "unknownuser" },
     });
-
     fireEvent.change(screen.getByPlaceholderText(/password123/i), {
       target: { value: "password123" },
     });
-
     fireEvent.click(screen.getByRole("button", { name: /log in/i }));
 
-    await waitFor(() =>
-      expect(screen.getByText("Username not found")).toBeInTheDocument()
-    );
+    await waitFor(() => {
+      expect(screen.getByText("Username not found")).toBeInTheDocument();
+    });
   });
-
 
   it("redirects on successful login", async () => {
     (getDocs as jest.Mock).mockResolvedValue({
@@ -103,17 +109,13 @@ describe("LoginPage", () => {
     (signInWithEmailAndPassword as jest.Mock).mockResolvedValue({});
 
     render(<LoginPage />);
-
     fireEvent.change(screen.getByPlaceholderText(/garywinthorpe@example.com \/ gary/i), {
       target: { value: "person@email.com" },
     });
-
     fireEvent.change(screen.getByPlaceholderText(/password123/i), {
       target: { value: "password123" },
     });
-
-    const loginButton = screen.getByRole("button", { name: /log in/i });
-    fireEvent.click(loginButton);
+    fireEvent.click(screen.getByRole("button", { name: /log in/i }));
 
     await waitFor(() => {
       expect(push).toHaveBeenCalledWith("/dreamTeamLanding");
