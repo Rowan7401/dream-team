@@ -27,13 +27,13 @@ export default function SearchUsers() {
   const [showFriends, setShowFriends] = useState(false); // State to toggle between search and friends
   const router = useRouter(); // Using router for navigation
 
-  const getTeamCounts = async (username: string) => {
+  const getTeamCounts = async (uName: string) => {
     const teamsRef = collection(db, "teams");
 
-    const createdQuery = query(teamsRef, where("createdByUsername", "==", username));
+    const createdQuery = query(teamsRef, where("createdByUsername", "==", uName));
     const createdSnapshot = await getDocs(createdQuery);
 
-    const cosignedQuery = query(teamsRef, where("cosignedBy", "array-contains", username));
+    const cosignedQuery = query(teamsRef, where("cosignedBy", "array-contains", uName));
     const cosignedSnapshot = await getDocs(cosignedQuery);
 
     return {
@@ -99,28 +99,32 @@ export default function SearchUsers() {
         return;
       }
 
+      type UserData = {
+        uid: string;
+        username: string;
+        email?: string;
+      };
+
       const q = query(collection(db, "users"), where("username", "==", searchUsername));
       const querySnapshot = await getDocs(q);
-      console.log("Query snapshot raw docs:");
-      querySnapshot.forEach(doc => {
-        console.log("DOC ID:", doc.id, "DATA:", doc.data());
-      });
 
       if (querySnapshot.empty) {
         setError("No users found with that username.");
         return;
       }
 
-      const users = querySnapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
+      const users: UserData[] = querySnapshot.docs.map((doc) => ({
+        uid: doc.id,
+        ...(doc.data() as Omit<UserData, "uid">),
+      }));
 
-
-      // Enrich all users with team counts (even if there's only 1 user)
       const enrichedUsers = await Promise.all(
         users.map(async (user) => {
           const counts = await getTeamCounts(user.username);
-          return { ...user, ...counts }; // 'authored' and 'cosigned' are now in the user object
+          return { ...user, ...counts };
         })
       );
+
 
 
 
