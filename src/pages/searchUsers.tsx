@@ -12,11 +12,7 @@ import Navbar from "@/components/navbar";
 import BackButton from "@/components/backButton";
 
 import { useRouter } from "next/navigation"; // App Router version
-
 import Head from "next/head";
-
-
-
 
 export default function SearchUsers() {
   const [searchUsername, setSearchUsername] = useState("");
@@ -42,8 +38,6 @@ export default function SearchUsers() {
     };
   };
 
-
-
   useEffect(() => {
     if (error) {
       const timeout = setTimeout(() => {
@@ -53,8 +47,6 @@ export default function SearchUsers() {
       return () => clearTimeout(timeout);
     }
   }, [error]);
-
-
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -85,9 +77,9 @@ export default function SearchUsers() {
       }
     } catch (err) {
       console.error("Error fetching friends:", err);
+      setError("Error fetching friends: " + err);
     }
   };
-
 
   const handleSearch = async () => {
     setError("");
@@ -105,28 +97,29 @@ export default function SearchUsers() {
         email?: string;
       };
 
-      const q = query(collection(db, "users"), where("username", "==", searchUsername));
+      const q = query(collection(db, "users"));
       const querySnapshot = await getDocs(q);
 
-      if (querySnapshot.empty) {
-        setError("No users found with that username.");
-        return;
-      }
-
-      const users: UserData[] = querySnapshot.docs.map((doc) => ({
+      const allUsers = querySnapshot.docs.map((doc) => ({
         uid: doc.id,
         ...(doc.data() as Omit<UserData, "uid">),
       }));
 
+      const filtered = allUsers.filter((user) =>
+        user.username.toLowerCase().includes(searchUsername.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        setError("No users found with that username or partial username.");
+        return;
+      }
+
       const enrichedUsers = await Promise.all(
-        users.map(async (user) => {
+        filtered.map(async (user) => {
           const counts = await getTeamCounts(user.username);
           return { ...user, ...counts };
         })
       );
-
-
-
 
       setShowFriends(false);
       setResults(enrichedUsers);
@@ -150,14 +143,13 @@ export default function SearchUsers() {
       // Fetch the user document
       const userDoc = await getDoc(userDocRef);
       const userData = userDoc.data();
-
       // Check if friends field exists and is an array
       const friendsList = userData?.friends || []; // Default to an empty array if friends doesn't exist
 
       const isFriendAlready = friendsList.some((f: any) => f.uid === friend.uid);
 
       if (isFriendAlready) {
-        alert("This user is already your friend!");
+        setError("This user is already your friend!");
         return;
       }
 
@@ -170,7 +162,7 @@ export default function SearchUsers() {
         })
       });
 
-      alert(`${friend.username} has been added as a friend!`);
+      setError(`${friend.username} has been added as a friend!`);
       fetchFriends(); // Re-fetch friends to update the list
     } catch (err) {
       console.error("Error adding friend:", err);
@@ -178,11 +170,9 @@ export default function SearchUsers() {
     }
   };
 
-
   const handleViewDreams = (friendUsername: string) => {
     router.push(`/userTeams/${friendUsername}`);
   };
-
 
   return (
     <div className="background page-transition">
@@ -197,20 +187,15 @@ export default function SearchUsers() {
           <h1 className={styles.heroTitle}>Search Users</h1>
         </header>
 
-        {error && (
-          <>
-            <p className={`${styles.userSearchError} ${!error ? styles.userSearchErrorHidden : ""}`}>
-              {error}
-            </p>
+        <>
+          <p className={`${styles.userSearchError} ${error ? styles.userSearchErrorVisible : ""}`}>
+            {error}
+          </p>
 
-            {error === "Invalid (empty) search" && (
-              <p className={`${styles.userSearchErrorMain} ${!error ? styles.userSearchErrorMainHidden : ""}`}>
-                Please type a valid Username or a partial Username.
-              </p>
-            )}
-          </>
-        )}
-
+          <p className={`${styles.userSearchErrorMain} ${error === "Invalid (empty) search" ? styles.userSearchErrorMainVisible : ""}`}>
+            Please type a valid Username or a partial Username.
+          </p>
+        </>
 
         <div className={styles.searchBar}>
           <input
@@ -241,7 +226,6 @@ export default function SearchUsers() {
               friends.map((friend, index) => (
                 <div key={index} className={styles.resultCard}>
                   <p><strong>Username:</strong> {friend.username}</p>
-                  <p><strong>Email:</strong> {friend.email}</p>
                   <p><strong>Dream Teams Authored:</strong> {friend.authored ?? "Loading..."}</p>
                   <p><strong>Dream Teams Co-signed:</strong> {friend.cosigned ?? "Loading..."}</p>
 
@@ -254,7 +238,7 @@ export default function SearchUsers() {
                 </div>
               ))
             ) : (
-              <p>You have no friends yet.</p>
+              <p className={styles.h3}>You have no friends yet. Search usernames and add some!</p>
             )}
           </div>
         )}

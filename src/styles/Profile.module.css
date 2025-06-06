@@ -32,6 +32,28 @@
 }
 
 
+.searchErrorMain {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  font-size: 1rem;
+  margin-top: -1rem;
+  font-weight: 400;
+  color: #fda10cef;
+}
+
+.searchError {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  color: red;
+  margin: 1rem 0;
+}
+
+.searchErrorVisible,
+.searchErrorMainVisible {
+  opacity: 1;
+}
+
+
 .container {
     display: flex;
     justify-content: center;

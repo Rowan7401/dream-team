@@ -6,17 +6,17 @@
 
   .heroTitle {
     font-size: 1.7rem !important;
+    justify-self: center !important;
+    justify-content: center !important;
     margin-top: -1.5rem !important;
     margin-bottom: -1rem !important;
-    margin-left: -5% !important;
-    position: relative !important;
   }
 
   .sectionHeader {
     font-size: 1.2rem !important;
     margin-left: 0.8rem !important;
     margin-bottom: 0.5rem !important;
-    margin-top: 1rem !important;
+    margin-top: 2rem !important;
     max-width: 90% !important;
   }
 }

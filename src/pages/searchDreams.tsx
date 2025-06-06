@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/styles/SearchDreams.module.css";
 
 import Navbar from "@/components/navbar";
@@ -25,13 +25,33 @@ interface DreamTeam {
 
 export default function SearchDreams() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [results, setResults] = useState<DreamTeam[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
 
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => {
+        setError(null);
+      }, 3000); // 3 seconds
+
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
+
+
   const fetchDreamsByQuery = async (queryStr: string) => {
     setLoading(true);
+    setError("");
+
+    if (queryStr.length == 0) {
+      setError("Invalid (empty) search");
+      setLoading(false);
+      return;
+    }
+
     try {
       const q = query(collection(db, "teams"));
       const querySnapshot = await getDocs(q);
@@ -43,10 +63,11 @@ export default function SearchDreams() {
       const filtered = allDreams.filter((dream) =>
         dream.title?.toLowerCase().includes(queryStr.toLowerCase())
       );
-      
+
       setResults(filtered);
     } catch (err) {
       console.error("Error searching dreams:", err);
+      setError("Error searching dreams: " + err);
     }
     setLoading(false);
   };
@@ -76,6 +97,7 @@ export default function SearchDreams() {
       setResults(dreams);
     } catch (error) {
       console.error("Error fetching dreams:", error);
+      setError("Error fetching dreams: " + error);
     }
 
     setLoading(false);
@@ -95,9 +117,9 @@ export default function SearchDreams() {
 
   return (
     <div className="background page-transition">
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
-    </Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+      </Head>
       <div className={styles.nav}>
         <Navbar />
       </div>
@@ -106,6 +128,16 @@ export default function SearchDreams() {
         <header className={styles.heroHeader}>
           <h1 className={styles.heroTitle}>Search Dream Teams</h1>
         </header>
+
+        <>
+          <p className={`${styles.searchError} ${error ? styles.searchErrorVisible : ""}`}>
+            {error}
+          </p>
+
+          <p className={`${styles.searchErrorMain} ${error === "Invalid (empty) search" ? styles.searchErrorMainVisible : ""}`}>
+            Please type a valid Dream Team title or a partial title.
+          </p>
+        </>
 
         <div className={styles.searchBar}>
           <input
@@ -155,7 +187,7 @@ export default function SearchDreams() {
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick1}</p>
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick2}</p>
                   <p><strong style={{ fontSize: "1.3rem" }}>✦     </strong> {dream.pick3}</p>
-                  <p style={{marginTop: "1rem", marginBottom: "1rem"}}><em style={{ padding: "0.1rem", border: "double", borderWidth: "0.2rem", backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
+                  <p style={{ marginTop: "1rem", marginBottom: "1rem" }}><em style={{ padding: "0.1rem", border: "double", borderWidth: "0.2rem", backgroundColor: "rgb(183, 183, 183)" }}>Category:</em> {dream.category}</p>
                   <p><strong>Created By:</strong> {dream.createdByUsername}</p>
 
                   {dream.cosignedBy && dream.cosignedBy.length > 0 && (

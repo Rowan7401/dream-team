@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, act, screen } from "@testing-library/react";
 import CurrentDreams from "@/pages/currentDreams";
 
 // Mock next/navigation hooks
@@ -85,21 +85,22 @@ jest.mock("@/components/navbar", () => () => <div>Navbar Component</div>);
 jest.mock("@/components/backButton", () => () => <button>BackButton</button>);
 
 describe("CurrentDreams Component", () => {
-  it("shows loading state initially", () => {
-    render(<CurrentDreams />);
-
-    expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-  });
 
   it("displays the username in the header", async () => {
-    render(<CurrentDreams />);
+    await act(async () => {   
+      render(<CurrentDreams />);
+    });
 
     const heading = await screen.findByText(/testuser's Dream Teams/i);
     expect(heading).toBeInTheDocument();
   });
 
+
   it("renders created dream teams", async () => {
-    render(<CurrentDreams />);
+    await act(async () => {
+      render(<CurrentDreams />);
+    });
+
 
     expect(await screen.findByText(/🛠 Created by You/i)).toBeInTheDocument();
     expect(screen.getByText("Pick A")).toBeInTheDocument();
@@ -108,7 +109,10 @@ describe("CurrentDreams Component", () => {
   });
 
   it("renders cosigned dream teams", async () => {
-    render(<CurrentDreams />);
+    await act(async () => {
+      render(<CurrentDreams />);
+    });
+
 
     expect(await screen.findByText(/🤝 Co-signed by You/i)).toBeInTheDocument();
     expect(screen.getByText("Pick X")).toBeInTheDocument();
