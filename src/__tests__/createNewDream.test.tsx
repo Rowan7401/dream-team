@@ -64,6 +64,49 @@ describe("CreateDream", () => {
         jest.clearAllMocks();
     });
 
+    it("displays previously created dream team titles alphabetically", async () => {
+        const mockTitles = [
+            { data: () => ({ title: "Zebra Team" }) },
+            { data: () => ({ title: "apple team" }) },
+            { data: () => ({ title: "Banana Team" }) },
+        ];
+
+        (getDocs as jest.Mock).mockResolvedValue({ docs: mockTitles });
+
+        render(<CreateDream />);
+
+        await waitFor(() => {
+            fireEvent.click(screen.getByRole("button", { name: /show existing titles/i }));
+        });
+
+        await waitFor(() => {
+            const items = screen.getAllByRole("listitem");
+            expect(items.map(i => i.textContent)).toEqual([
+                "Apple Team", "Banana Team", "Zebra Team"
+            ]);
+        });
+    });
+
+    it("fetches and sets a random noun as title", async () => {
+        // Mock global fetch to return a noun
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                text: () => Promise.resolve("banana    squad!"),
+            })
+        ) as jest.Mock;
+
+        render(<CreateDream />);
+
+        fireEvent.click(screen.getByRole("button", { name: /surprise me with an idea/i }));
+
+        await waitFor(() => {
+            expect(screen.getByPlaceholderText(/title/i)).toHaveValue("Banana Squad");
+        });
+
+        // Cleanup
+        (global.fetch as jest.Mock).mockRestore?.();
+    });
+
     it("shows error on blank pick(s)", async () => {
         render(<CreateDream />);
 

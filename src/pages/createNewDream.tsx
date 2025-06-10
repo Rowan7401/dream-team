@@ -30,6 +30,8 @@ export default function CreateNewDream() {
   const [pick3, setPick3] = useState("");
 
   const [category, setCategory] = useState("Sports");
+  const [existingTitles, setExistingTitles] = useState<string[]>([]);
+  const [showTitleList, setShowTitleList] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -49,6 +51,26 @@ export default function CreateNewDream() {
     "Gaming",
     "Other"
   ];
+
+  useEffect(() => {
+    const fetchTitles = async () => {
+      try {
+        const teamsRef = collection(db, "teams");
+        const snapshot = await getDocs(teamsRef);
+
+        const titles = snapshot.docs
+          .map(doc => normalizeInput(doc.data().title || ""))
+          .filter((title, index, self) => title && self.indexOf(title) === index)
+          .sort();
+
+        setExistingTitles(titles);
+      } catch (err) {
+        console.error("Failed to fetch dream team titles:", err);
+      }
+    };
+
+    fetchTitles();
+  }, []);
 
 
   const handleRandomTopic = async () => {
@@ -139,7 +161,7 @@ export default function CreateNewDream() {
 
         setSuccessMessage("✅ Co-signed existing Dream Team! 👊");
         setShowPopup(true);
-       
+
         router.push("/currentDreams");
 
         return;
@@ -162,17 +184,14 @@ export default function CreateNewDream() {
       setSuccessMessage("✅ Thank you, dream team created! 😴💭");
       setShowPopup(true);
 
-      
+
       router.push("/currentDreams");
-    
+
     } catch (err) {
       console.error("🔥 Firebase error:", err);
       setError("An error occurred while creating the dream team.");
     }
   };
-
-
-
 
   return (
     <div className="background page-transition">
@@ -201,14 +220,48 @@ export default function CreateNewDream() {
         <div className={styles.card}>
 
           <form onSubmit={handleSubmit} className={styles.form}>
+
             <p className={styles.heroSubtitle}> 🤔 Can't Think of Topic? 💭 </p>
-            <button
-              type="button"
-              onClick={handleRandomTopic}
-              className={styles.surpriseButton}
-            >
-              🎲 Surprise Me with an Idea
-            </button>
+
+            <div className={styles.buttonGroup}>
+              <button
+                type="button"
+                onClick={handleRandomTopic}
+                className={styles.surpriseButton}
+              >
+                🎲 Surprise Me with an Idea
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowTitleList(!showTitleList)}
+                className={styles.toggleTitleListButton}
+              >
+                {showTitleList ? "Hide Existing Titles" : " 🗂️ Show Existing Titles"}
+              </button>
+            </div>
+
+            <div className={styles.titleDropdownContainer}>
+              {showTitleList && (
+                <div className={styles.titleDropdown}>
+                  {existingTitles.length === 0 ? (
+                    <p>No titles found.</p>
+                  ) : (
+                    <ul className={styles.titleList}>
+                      {existingTitles.map((t, i) => (
+                        <li
+                          key={i}
+                          className={styles.titleItem}
+                          onClick={() => setTitle(t)}
+                        >
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
 
             <input
               type="text"
